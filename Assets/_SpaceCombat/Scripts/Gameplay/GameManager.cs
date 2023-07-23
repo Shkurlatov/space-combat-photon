@@ -7,6 +7,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using SpaceCombat.Infrastructure.Input;
 using SpaceCombat.Gameplay.Ship;
+using SpaceCombat.Gameplay.Network;
+using SpaceCombat.Gameplay.Factory;
 
 namespace SpaceCombat.Gameplay
 {
@@ -39,6 +41,11 @@ namespace SpaceCombat.Gameplay
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, true}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            IGameFactory gameFactory = new GameFactory();
+
+            GameObject photonNetwork = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity, 0);
+            photonNetwork.GetComponent<CoinsHandler>().Initialize(gameFactory, 3);
         }
 
         public override void OnDisable()
@@ -198,7 +205,6 @@ namespace SpaceCombat.Gameplay
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.Instantiate("Coin", Vector3.zero, Quaternion.identity, 0);
                 //StartCoroutine(SpawnAsteroid());
             }
         }

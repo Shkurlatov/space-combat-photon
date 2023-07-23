@@ -24,7 +24,7 @@ namespace SpaceCombat.Gameplay.Network
         {
             if (targetPlayer.ActorNumber == _ownerNumber && _ownerScore != targetPlayer.GetScore())
             {
-                Debug.Log("targetPlayer == _owner");
+            Debug.Log("DDDD");
                 _ownerScore = targetPlayer.GetScore();
                 _photonView.RPC("RespawnCoin", RpcTarget.MasterClient);
             }

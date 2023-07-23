@@ -10,7 +10,7 @@ namespace SpaceCombat.Gameplay
         {
             if (other.gameObject.CompareTag("SpaceShip"))
             {
-                other.GetComponent<PhotonView>().Owner.AddScore(10);
+                other.GetComponent<PhotonView>().Owner.AddScore(1);
 
                 Destroy(gameObject);
             }
