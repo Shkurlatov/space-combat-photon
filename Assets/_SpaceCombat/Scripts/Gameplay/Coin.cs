@@ -1,52 +1,52 @@
 ﻿using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using System;
 using UnityEngine;
 
 namespace SpaceCombat.Gameplay
 {
     public class Coin : MonoBehaviour
     {
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("SpaceShip"))
-            {
-                other.GetComponent<PhotonView>().Owner.AddScore(1);
+        private bool _isDestroyed;
 
-                Destroy(gameObject);
-            }
+        private PhotonView _photonView;
+
+        private Action _onCoinDestroy;
+
+        private void Awake()
+        {
+            _photonView = GetComponent<PhotonView>();
         }
 
-        public void OnCollisionEnter(Collision collision)
+        public void Initialize(Action onCoinDestroy)
         {
+            _onCoinDestroy = onCoinDestroy;
+        }
 
-            //if (isDestroyed)
-            //{
-            //    return;
-            //}
+        private void OnTriggerEnter(Collider other)
+        {
+            if (_isDestroyed)
+            {
+                return;
+            }
 
-            //if (collision.gameObject.CompareTag("Bullet"))
-            //{
-            //    if (photonView.IsMine)
-            //    {
-            //        Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            //        bullet.Owner.AddScore(isLargeAsteroid ? 2 : 1);
+            if (other.gameObject.CompareTag("SpaceShip"))
+            {
+                _isDestroyed = true;
 
-            //        DestroyAsteroidGlobally();
-            //    }
-            //    else
-            //    {
-            //        DestroyAsteroidLocally();
-            //    }
-            //}
-            //else if (collision.gameObject.CompareTag("Player"))
-            //{
-            //    if (photonView.IsMine)
-            //    {
-            //        collision.gameObject.GetComponent<PhotonView>().RPC("DestroySpaceship", RpcTarget.All);
+                if (_photonView.IsMine)
+                {
+                    other.GetComponent<PhotonView>().Owner.AddScore(1);
 
-            //        DestroyAsteroidGlobally();
-            //    }
-            //}
+                    PhotonNetwork.Destroy(gameObject);
+
+                    _onCoinDestroy?.Invoke();
+                }
+                else
+                {
+                    GetComponent<Renderer>().enabled = false;
+                }
+            }
         }
     }
 }

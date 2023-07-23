@@ -1,7 +1,9 @@
-﻿namespace SpaceCombat.Gameplay.Factory
+﻿using UnityEngine;
+
+namespace SpaceCombat.Gameplay.Factory
 {
     public interface IGameFactory
     {
-        void SpawnCoin();
+        GameObject SpawnCoin();
     }
 }

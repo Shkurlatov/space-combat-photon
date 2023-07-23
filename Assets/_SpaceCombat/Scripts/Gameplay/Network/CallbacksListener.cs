@@ -20,14 +20,14 @@ namespace SpaceCombat.Gameplay.Network
             _ownerScore = 0;
         }
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-        {
-            if (targetPlayer.ActorNumber == _ownerNumber && _ownerScore != targetPlayer.GetScore())
-            {
-            Debug.Log("DDDD");
-                _ownerScore = targetPlayer.GetScore();
-                _photonView.RPC("RespawnCoin", RpcTarget.MasterClient);
-            }
-        }
+        //public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        //{
+        //    if (targetPlayer.ActorNumber == _ownerNumber && _ownerScore != targetPlayer.GetScore())
+        //    {
+        //    Debug.Log("DDDD");
+        //        _ownerScore = targetPlayer.GetScore();
+        //        _photonView.RPC("RespawnCoin", RpcTarget.MasterClient);
+        //    }
+        //}
     }
 }

@@ -45,7 +45,7 @@ namespace SpaceCombat.Gameplay
             IGameFactory gameFactory = new GameFactory();
 
             GameObject photonNetwork = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity, 0);
-            photonNetwork.GetComponent<CoinsHandler>().Initialize(gameFactory, 3);
+            photonNetwork.GetComponent<CoinsHandler>().Initialize(gameFactory, 7);
         }
 
         public override void OnDisable()
