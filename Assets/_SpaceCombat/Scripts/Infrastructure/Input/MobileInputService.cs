@@ -2,8 +2,18 @@
 
 namespace SpaceCombat.Infrastructure.Input
 {
-    public class MobileInputService : InputService
+    public class MobileInputService : IInputService
     {
-        public override Vector2 Axis => InputAxis();
+        protected const string Horizontal = "Horizontal";
+        protected const string Vertical = "Vertical";
+        protected const string Fire = "Fire";
+
+        public Vector2 Axis => InputAxis();
+
+        public bool IsAttackButtonUp() =>
+            SimpleInput.GetButtonUp(Fire);
+
+        private Vector2 InputAxis() =>
+            new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
     }
 }
