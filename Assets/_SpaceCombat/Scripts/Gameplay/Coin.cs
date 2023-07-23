@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-//using Photon.Pun.UtilityScripts;
+﻿using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using UnityEngine;
 
 namespace SpaceCombat.Gameplay
 {
@@ -9,6 +10,8 @@ namespace SpaceCombat.Gameplay
         {
             if (other.gameObject.CompareTag("SpaceShip"))
             {
+                other.GetComponent<PhotonView>().Owner.AddScore(10);
+
                 Destroy(gameObject);
             }
         }

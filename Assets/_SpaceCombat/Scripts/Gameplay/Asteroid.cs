@@ -11,7 +11,7 @@ namespace SpaceCombat.Gameplay
 
         private bool isDestroyed;
 
-        private PhotonView photonView;
+        private PhotonView _photonView;
 
 #pragma warning disable 0109
         private new Rigidbody rigidbody;
@@ -21,22 +21,22 @@ namespace SpaceCombat.Gameplay
 
         public void Awake()
         {
-            photonView = GetComponent<PhotonView>();
+            _photonView = GetComponent<PhotonView>();
 
             rigidbody = GetComponent<Rigidbody>();
 
-            if (photonView.InstantiationData != null)
+            if (_photonView.InstantiationData != null)
             {
-                rigidbody.AddForce((Vector3)photonView.InstantiationData[0]);
-                rigidbody.AddTorque((Vector3)photonView.InstantiationData[1]);
+                rigidbody.AddForce((Vector3)_photonView.InstantiationData[0]);
+                rigidbody.AddTorque((Vector3)_photonView.InstantiationData[1]);
 
-                isLargeAsteroid = (bool)photonView.InstantiationData[2];
+                isLargeAsteroid = (bool)_photonView.InstantiationData[2];
             }
         }
 
         public void Update()
         {
-            if (!photonView.IsMine)
+            if (!_photonView.IsMine)
             {
                 return;
             }
@@ -45,6 +45,7 @@ namespace SpaceCombat.Gameplay
             {
                 // Out of the screen
                 PhotonNetwork.Destroy(gameObject);
+                //_photonView.Owner.AddScore(10);
             }
         }
 
@@ -57,7 +58,7 @@ namespace SpaceCombat.Gameplay
 
             if (collision.gameObject.CompareTag("Bullet"))
             {
-                if (photonView.IsMine)
+                if (_photonView.IsMine)
                 {
                     Bullet bullet = collision.gameObject.GetComponent<Bullet>();
                     //bullet.Owner.AddScore(isLargeAsteroid ? 2 : 1);
@@ -71,7 +72,7 @@ namespace SpaceCombat.Gameplay
             }
             else if (collision.gameObject.CompareTag("Player"))
             {
-                if (photonView.IsMine)
+                if (_photonView.IsMine)
                 {
                     collision.gameObject.GetComponent<PhotonView>().RPC("DestroySpaceship", RpcTarget.All);
 
