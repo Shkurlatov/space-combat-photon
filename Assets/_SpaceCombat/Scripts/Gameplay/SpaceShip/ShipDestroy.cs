@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipDestroy : MonoBehaviour
     {

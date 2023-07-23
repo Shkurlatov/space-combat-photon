@@ -6,12 +6,13 @@ using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using SpaceCombat.Infrastructure.Input;
+using SpaceCombat.Gameplay.Ship;
 
 namespace SpaceCombat.Gameplay
 {
-    public class AsteroidsGameManager : MonoBehaviourPunCallbacks
+    public class GameManager : MonoBehaviourPunCallbacks
     {
-        public static AsteroidsGameManager Instance = null;
+        public static GameManager Instance = null;
 
         public Text InfoText;
 

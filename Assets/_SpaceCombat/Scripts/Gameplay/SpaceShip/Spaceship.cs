@@ -4,7 +4,7 @@ using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Ship
 {
     public class Spaceship : MonoBehaviour
     {

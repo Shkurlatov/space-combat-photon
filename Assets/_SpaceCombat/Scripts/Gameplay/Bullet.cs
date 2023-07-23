@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceCombat.Gameplay.Ship;
+using UnityEngine;
 
 namespace SpaceCombat.Gameplay
 {

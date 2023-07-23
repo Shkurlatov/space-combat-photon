@@ -4833,14 +4833,14 @@ GameObject:
   - component: {fileID: 498316}
   - component: {fileID: 3313632}
   - component: {fileID: 2304546}
-  - component: {fileID: 5473192}
+  - component: {fileID: 5287718161700547525}
+  - component: {fileID: 1755635277760201036}
+  - component: {fileID: 8814263195454510561}
+  - component: {fileID: 6004837332769803386}
   - component: {fileID: 11464560}
   - component: {fileID: 11417374}
-  - component: {fileID: 11435718}
-  - component: {fileID: 4164290217191326253}
-  - component: {fileID: 4256320003474539384}
+  - component: {fileID: 5473192}
   - component: {fileID: 4822456847670946675}
-  - component: {fileID: 5780639160812971742}
   m_Layer: 8
   m_Name: Spaceship
   m_TagString: SpaceShip
@@ -4916,22 +4916,63 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &5473192
-Rigidbody:
+--- !u!114 &5287718161700547525
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178952}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 4
-  m_AngularDrag: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 84
-  m_CollisionDetection: 1
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aaf78c7219f4c44f8efdd24ee73a347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 90
+  MovementSpeed: 2
+  MaxSpeed: 0.2
+  Destruction: {fileID: 19801310}
+  EngineTrail: {fileID: 185348}
+--- !u!114 &1755635277760201036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178952}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12de79ad1fd0d94284c706a24837cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 20
+  MovementSpeed: 10
+--- !u!114 &8814263195454510561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178952}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5c4ffa257fdf4439d10bdfba3e6720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReloadTime: 0.2
+  BulletPrefab: {fileID: 152888, guid: 5624ee9da9d10514ea7b808e83979c85, type: 3}
+--- !u!114 &6004837332769803386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c19cc66de77e748a73c7b9594fe0a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11464560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4971,52 +5012,22 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 10
---- !u!114 &11435718
-MonoBehaviour:
+--- !u!54 &5473192
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c565458f43b8ad4469a2ca341c210318, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RotationSpeed: 90
-  MovementSpeed: 2
-  MaxSpeed: 0.1
-  Destruction: {fileID: 19801310}
-  EngineTrail: {fileID: 185348}
---- !u!114 &4164290217191326253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178952}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7b601fe34f4637479777130343c6cc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RotationSpeed: 90
-  MovementSpeed: 10
-  MaxSpeed: 0.2
---- !u!114 &4256320003474539384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178952}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14780fdeabc69be479cb4a75849f3d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ReloadTime: 1
-  BulletPrefab: {fileID: 152888, guid: 5624ee9da9d10514ea7b808e83979c85, type: 3}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 4
+  m_AngularDrag: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 84
+  m_CollisionDetection: 1
 --- !u!135 &4822456847670946675
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5030,18 +5041,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: -0.5}
---- !u!114 &5780639160812971742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d22f600c6fdde3947bbaeae75f6812d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &185348
 GameObject:
   m_ObjectHideFlags: 0

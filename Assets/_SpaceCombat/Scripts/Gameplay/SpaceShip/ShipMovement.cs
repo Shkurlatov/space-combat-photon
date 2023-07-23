@@ -1,13 +1,12 @@
 ﻿using SpaceCombat.Infrastructure.Input;
 using UnityEngine;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipMovement : MonoBehaviour
     {
-        public float RotationSpeed = 1.0f;
-        public float MovementSpeed = 2.0f;
-        public float MaxSpeed = 0.2f;
+        public float RotationSpeed = 20.0f;
+        public float MovementSpeed = 10.0f;
 
         public const float Epsilon = 0.001f;
 

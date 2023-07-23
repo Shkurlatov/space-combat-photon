@@ -2,7 +2,7 @@
 using SpaceCombat.Infrastructure.Input;
 using UnityEngine;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipAttack : MonoBehaviour
     {
