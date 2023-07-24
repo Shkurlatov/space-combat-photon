@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using Photon.Pun;
 using Photon.Pun.UtilityScripts;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Photon.Pun;
+using System.Collections;
+using UnityEngine;
 
 namespace SpaceCombat.Gameplay.Ship
 {
+    public class LookAtCamera
+    {
+
+    }
     public class Spaceship : MonoBehaviour
     {
-        public float RotationSpeed = 90.0f;
-        public float MovementSpeed = 2.0f;
-        public float MaxSpeed = 0.2f;
+        public float RotationSpeed = 30.0f;
+        public float MovementSpeed = 20.0f;
 
         public ParticleSystem Destruction;
         public GameObject EngineTrail;
@@ -51,25 +53,11 @@ namespace SpaceCombat.Gameplay.Ship
 
         #endregion
 
-        #region COROUTINES
-
-        private IEnumerator WaitForRespawn()
-        {
-            yield return new WaitForSeconds(AsteroidsGame.PLAYER_RESPAWN_TIME);
-
-            _photonView.RPC("RespawnSpaceship", RpcTarget.AllViaServer);
-        }
-
-        #endregion
-
         #region PUN CALLBACKS
 
         [PunRPC]
         public void DestroySpaceship()
         {
-            //rigidbody.velocity = Vector3.zero;
-            //rigidbody.angularVelocity = Vector3.zero;
-
             collider.enabled = false;
             renderer.enabled = false;
 
@@ -80,29 +68,15 @@ namespace SpaceCombat.Gameplay.Ship
 
             if (_photonView.IsMine)
             {
-                object lives;
-                if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
-                {
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { AsteroidsGame.PLAYER_LIVES, ((int)lives <= 1) ? 0 : ((int)lives - 1) } });
-
-                    if (((int)lives) > 1)
-                    {
-                        StartCoroutine("WaitForRespawn");
-                    }
-                }
+                StartCoroutine(DestroyAfterDestruction());
             }
         }
 
-        [PunRPC]
-        public void RespawnSpaceship()
+        private IEnumerator DestroyAfterDestruction()
         {
-            collider.enabled = true;
-            renderer.enabled = true;
+            yield return new WaitForSeconds(1f);
 
-            //controllable = true;
-
-            EngineTrail.SetActive(true);
-            Destruction.Stop();
+            PhotonNetwork.Destroy(gameObject);
         }
 
         #endregion

@@ -44,8 +44,7 @@ namespace SpaceCombat.Gameplay
 
             IGameFactory gameFactory = new GameFactory();
 
-            GameObject photonNetwork = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity, 0);
-            photonNetwork.GetComponent<CoinsHandler>().Initialize(gameFactory, 7);
+            GetComponent<CoinsHandler>().Initialize(gameFactory, 7);
         }
 
         public override void OnDisable()
@@ -136,7 +135,7 @@ namespace SpaceCombat.Gameplay
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            if (changedProps.ContainsKey(AsteroidsGame.PLAYER_LIVES))
+            if (changedProps.ContainsKey(AsteroidsGame.SHIP_PROTECTION))
             {
                 CheckEndOfGame();
                 return;
@@ -236,7 +235,7 @@ namespace SpaceCombat.Gameplay
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 object lives;
-                if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
+                if (p.CustomProperties.TryGetValue(AsteroidsGame.SHIP_PROTECTION, out lives))
                 {
                     if ((int) lives > 0)
                     {

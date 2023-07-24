@@ -14,7 +14,7 @@ namespace SpaceCombat.Gameplay
         {
             if (collision.gameObject.CompareTag("SpaceShip"))
             {
-                collision.gameObject.GetComponent<ShipDestroy>().DestroyShip();
+                collision.gameObject.GetComponent<ShipProtection>().TakeDamage();
 
                 Destroy(gameObject);
             }

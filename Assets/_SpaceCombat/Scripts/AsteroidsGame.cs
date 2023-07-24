@@ -9,9 +9,9 @@ namespace SpaceCombat
 
         public const float PLAYER_RESPAWN_TIME = 4.0f;
 
-        public const int PLAYER_MAX_LIVES = 3;
+        public const int SHIP_MAX_PROTECTION = 10;
 
-        public const string PLAYER_LIVES = "PlayerLives";
+        public const string SHIP_PROTECTION = "PlayerLives";
         public const string PLAYER_READY = "IsPlayerReady";
         public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
 
