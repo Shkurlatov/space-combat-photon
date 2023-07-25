@@ -412,7 +412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InfoText: {fileID: 575765179}
-  AsteroidPrefabs: []
+  PopupSpawnPoint: {fileID: 1176443245}
+  PopupPrefab: {fileID: 4367607178264924857, guid: 971b7bc63908e1740ac91aff147dbba9, type: 3}
 --- !u!114 &964925489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +447,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2455823612950242646, guid: 6da8d9a85fa5d7e46b8b46879ff94327, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -250
+      objectReference: {fileID: 0}
     - target: {fileID: 8996229733947118418, guid: 6da8d9a85fa5d7e46b8b46879ff94327, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -536,6 +541,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6da8d9a85fa5d7e46b8b46879ff94327, type: 3}
+--- !u!224 &1176443245 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2455823612950242646, guid: 6da8d9a85fa5d7e46b8b46879ff94327, type: 3}
+  m_PrefabInstance: {fileID: 1176443244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1528142301
 PrefabInstance:
   m_ObjectHideFlags: 0

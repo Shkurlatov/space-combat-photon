@@ -26,12 +26,12 @@ namespace SpaceCombat.Gameplay.Ship
 
                 Points--;
 
+                UpdateShipProperties();
+
                 if (Points < 1)
                 {
                     DestroyShip();
                 }
-
-                UpdateShipProperties();
             }
         }
 
@@ -48,7 +48,7 @@ namespace SpaceCombat.Gameplay.Ship
         {
             _isDestroyed = true;
 
-            gameObject.GetComponent<PhotonView>().RPC("DestroySpaceship", RpcTarget.All);
+            gameObject.GetComponent<PhotonView>().RPC("DestroyShip", RpcTarget.All);
         }
     }
 }

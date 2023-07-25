@@ -5,14 +5,14 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipMovement : MonoBehaviour
     {
+        private const float INPUT_SENSITIVITY = 0.001f;
+        private const float FORCE_MULTIPLIER = 1000.0f;
+
         public float RotationSpeed = 28.0f;
         public float MovementSpeed = 12.0f;
 
-        public const float Epsilon = 0.001f;
-
         private IInputService _input;
         private float _force = 0.0f;
-
 
         private Rigidbody _rigidbody;
         private ScreenSize _screenSize;
@@ -30,8 +30,8 @@ namespace SpaceCombat.Gameplay.Ship
 
         private void Update()
         {
-            if (_input.Axis.sqrMagnitude > Epsilon)
-                _force = _input.Axis.sqrMagnitude;
+            if (_input.Axis.sqrMagnitude > INPUT_SENSITIVITY)
+                _force = _input.Axis.sqrMagnitude * FORCE_MULTIPLIER;
         }
 
         public void FixedUpdate()
@@ -40,7 +40,7 @@ namespace SpaceCombat.Gameplay.Ship
 
             if (direction != Vector3.zero)
             {
-                Vector3 force = _force * 1000.0f * MovementSpeed * Time.fixedDeltaTime * direction;
+                Vector3 force = _force * MovementSpeed * Time.fixedDeltaTime * direction.normalized;
                 _rigidbody.AddForce(force);
             }
 

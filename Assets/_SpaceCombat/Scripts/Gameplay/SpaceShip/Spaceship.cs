@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using Photon.Pun.UtilityScripts;
-using System.Collections;
 using UnityEngine;
 
 namespace SpaceCombat.Gameplay.Ship
@@ -9,14 +8,15 @@ namespace SpaceCombat.Gameplay.Ship
     {
 
     }
-    public class Spaceship : MonoBehaviour
+    public class SpaceShip : MonoBehaviour
     {
         public float RotationSpeed = 30.0f;
         public float MovementSpeed = 20.0f;
 
         public ParticleSystem Destruction;
         public GameObject EngineTrail;
-        //public GameObject BulletPrefab;
+
+        public bool IsDestroyed;
 
         private PhotonView _photonView;
 
@@ -56,8 +56,10 @@ namespace SpaceCombat.Gameplay.Ship
         #region PUN CALLBACKS
 
         [PunRPC]
-        public void DestroySpaceship()
+        public void DestroyShip()
         {
+            IsDestroyed = true;
+
             collider.enabled = false;
             renderer.enabled = false;
 
@@ -66,17 +68,27 @@ namespace SpaceCombat.Gameplay.Ship
             EngineTrail.SetActive(false);
             Destruction.Play();
 
-            if (_photonView.IsMine)
-            {
-                StartCoroutine(DestroyAfterDestruction());
-            }
+            CheckWinner();
         }
 
-        private IEnumerator DestroyAfterDestruction()
+        private void CheckWinner()
         {
-            yield return new WaitForSeconds(1f);
+            int aliveShipsCount = 0;
+            int actorNumber = 0;
 
-            PhotonNetwork.Destroy(gameObject);
+            foreach (SpaceShip ship in FindObjectsOfType<SpaceShip>())
+            {
+                if (!ship.IsDestroyed)
+                {
+                    aliveShipsCount++;
+                    actorNumber = ship.gameObject.GetPhotonView().Owner.ActorNumber;
+                }
+            }
+
+            if (aliveShipsCount == 1)
+            {
+                Debug.Log("WINNER PLAYER - " + actorNumber);
+            }
         }
 
         #endregion
