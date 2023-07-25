@@ -4946,8 +4946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12de79ad1fd0d94284c706a24837cb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 30
-  MovementSpeed: 15
+  RotationSpeed: 28
+  MovementSpeed: 12
 --- !u!114 &8814263195454510561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4960,7 +4960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5c4ffa257fdf4439d10bdfba3e6720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ReloadTime: 0.2
+  ReloadTime: 0.5
   BulletPrefab: {fileID: 152888, guid: 5624ee9da9d10514ea7b808e83979c85, type: 3}
 --- !u!114 &6142996893872602380
 MonoBehaviour:

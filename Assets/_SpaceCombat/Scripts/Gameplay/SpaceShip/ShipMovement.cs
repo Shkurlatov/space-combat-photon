@@ -5,8 +5,8 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipMovement : MonoBehaviour
     {
-        public float RotationSpeed = 20.0f;
-        public float MovementSpeed = 10.0f;
+        public float RotationSpeed = 28.0f;
+        public float MovementSpeed = 12.0f;
 
         public const float Epsilon = 0.001f;
 
