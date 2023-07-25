@@ -194,7 +194,7 @@ namespace SpaceCombat.Gameplay
 
             IInputService input = new MobileInputService();
 
-            GameObject spaceShip = PhotonNetwork.Instantiate("Spaceship", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            GameObject spaceShip = PhotonNetwork.Instantiate("Game/Spaceship", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
             spaceShip.GetComponent<ShipMovement>().Initialize(input, screenSize);
             spaceShip.GetComponent<ShipMovement>().enabled = true;

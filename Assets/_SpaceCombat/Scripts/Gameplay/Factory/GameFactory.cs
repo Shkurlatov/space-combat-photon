@@ -17,7 +17,7 @@ namespace SpaceCombat.Gameplay.Factory
             float positionX = Random.Range(-_screenSize.HalfWidth, _screenSize.HalfWidth);
             float positionZ = Random.Range(-_screenSize.HalfHeight, _screenSize.HalfHeight);
 
-            return PhotonNetwork.InstantiateRoomObject("Coin", new Vector3(positionX, 0, positionZ), Quaternion.identity, 0);
+            return PhotonNetwork.InstantiateRoomObject("Game/Coin", new Vector3(positionX, 0, positionZ), Quaternion.identity, 0);
         }
     }
 }
