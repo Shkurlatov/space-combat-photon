@@ -9,6 +9,7 @@ namespace SpaceCombat.Infrastructure.Bootstrap
 
         public Game(SceneLoader sceneLoader)
         {
+            sceneLoader.ShowCurtain();
             StateMachine = new GameStateMachine(sceneLoader, new ServiceContainer());
         }
     }

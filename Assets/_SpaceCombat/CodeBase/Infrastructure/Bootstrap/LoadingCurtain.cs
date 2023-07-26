@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SpaceCombat.Infrastructure.Bootstrap
 {
     public class LoadingCurtain : MonoBehaviour
     {
         [SerializeField] private CanvasGroup _curtain;
-        [SerializeField] private Image _progressImage;
 
         public void Show()
         {
@@ -15,13 +13,10 @@ namespace SpaceCombat.Infrastructure.Bootstrap
             _curtain.alpha = 1;
         }
 
-        public void FillProgress(float progress)
+        public void Hide()
         {
-            _progressImage.fillAmount = progress;
-        }
-
-        public void Hide() =>
             StartCoroutine(DoFadeIn());
+        }
 
         private IEnumerator DoFadeIn()
         {

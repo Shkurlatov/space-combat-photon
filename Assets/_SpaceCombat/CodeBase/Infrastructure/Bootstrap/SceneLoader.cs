@@ -29,16 +29,10 @@ namespace SpaceCombat.Infrastructure.Bootstrap
                 yield break;
             }
 
-            _loadingCurtain.FillProgress(0);
-
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
 
             while (!waitNextScene.isDone)
             {
-                yield return new WaitForSeconds(0.1f);
-
-                _loadingCurtain.FillProgress(Mathf.Clamp01(waitNextScene.progress / 0.9f));
-
                 yield return null;
             }
 

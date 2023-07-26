@@ -26,7 +26,6 @@ namespace SpaceCombat.Infrastructure.States
 
         public void Enter(string sceneName)
         {
-            _sceneLoader.ShowCurtain();
             _gameFactory.Cleanup();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
