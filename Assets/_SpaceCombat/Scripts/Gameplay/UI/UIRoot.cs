@@ -79,7 +79,7 @@ namespace SpaceCombat.Gameplay.UI
             Color textColor = AsteroidsGame.GetColor(winner.ActorNumber - 1);
             string colorName = AsteroidsGame.GetColorName(winner.ActorNumber - 1);
 
-            string popupText = $"Winner - {colorName} Player!\n\nCollected  {collectedCoins}  Coins";
+            string popupText = $"Winner - {colorName} Player !\n\nCollected  {collectedCoins}  Coins";
 
             Popup popup = Instantiate(PopupPrefab, transform).GetComponent<Popup>();
             popup.UpdateText(popupText, textColor);

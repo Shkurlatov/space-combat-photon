@@ -4833,7 +4833,7 @@ GameObject:
   - component: {fileID: 498316}
   - component: {fileID: 3313632}
   - component: {fileID: 2304546}
-  - component: {fileID: 5287718161700547525}
+  - component: {fileID: 6651499519857239000}
   - component: {fileID: 1755635277760201036}
   - component: {fileID: 8814263195454510561}
   - component: {fileID: 6142996893872602380}
@@ -4842,7 +4842,7 @@ GameObject:
   - component: {fileID: 5473192}
   - component: {fileID: 4822456847670946675}
   m_Layer: 8
-  m_Name: SpaceShip
+  m_Name: Spaceship
   m_TagString: SpaceShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4917,7 +4917,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5287718161700547525
+--- !u!114 &6651499519857239000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4929,11 +4929,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aaf78c7219f4c44f8efdd24ee73a347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 90
-  MovementSpeed: 2
+  RotationSpeed: 30
+  MovementSpeed: 20
   Destruction: {fileID: 19801310}
   EngineTrail: {fileID: 185348}
-  IsDestroyed: 0
 --- !u!114 &1755635277760201036
 MonoBehaviour:
   m_ObjectHideFlags: 0
