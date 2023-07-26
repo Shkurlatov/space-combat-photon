@@ -13,7 +13,7 @@ namespace SpaceCombat.Gameplay.Ship
         public float MovementSpeed = 12.0f;
 
         private IInputService _input;
-        private float _force = 0.0f;
+        private float _force;
 
         private Rigidbody _rigidbody;
         private ScreenSize _screenSize;

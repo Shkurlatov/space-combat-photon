@@ -5,9 +5,12 @@ namespace SpaceCombat.Gameplay
 {
     public class Bullet : MonoBehaviour
     {
+        public float Speed = 100.0f;
+        public float DestroyTime = 3.0f;
+
         public void Start()
         {
-            Destroy(gameObject, 3.0f);
+            Destroy(gameObject, DestroyTime);
         }
 
         public void OnCollisionEnter(Collision collision)
@@ -25,7 +28,7 @@ namespace SpaceCombat.Gameplay
             transform.forward = originalDirection;
 
             Rigidbody rigidbody = GetComponent<Rigidbody>();
-            rigidbody.velocity = originalDirection * 100.0f;
+            rigidbody.velocity = originalDirection * Speed;
             rigidbody.position += rigidbody.velocity * lag;
         }
     }

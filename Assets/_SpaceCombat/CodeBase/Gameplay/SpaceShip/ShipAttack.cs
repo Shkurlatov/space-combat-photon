@@ -11,7 +11,7 @@ namespace SpaceCombat.Gameplay.Ship
         private PhotonView _photonView;
         private IInputService _input;
 
-        private float shootingTimer = 0.0f;
+        private float shootingTimer;
 
         public GameObject BulletPrefab;
 
