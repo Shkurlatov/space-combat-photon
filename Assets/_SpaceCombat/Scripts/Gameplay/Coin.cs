@@ -7,9 +7,11 @@ namespace SpaceCombat.Gameplay
 {
     public class Coin : MonoBehaviour
     {
-        private bool _isDestroyed;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private PhotonView _photonView;
+
+        private bool _isDestroyed;
 
         private Action _onCoinDestroy;
 
@@ -33,6 +35,7 @@ namespace SpaceCombat.Gameplay
             if (other.gameObject.CompareTag("SpaceShip"))
             {
                 _isDestroyed = true;
+                _spriteRenderer.enabled = false;
 
                 if (_photonView.IsMine)
                 {
@@ -41,10 +44,6 @@ namespace SpaceCombat.Gameplay
                     PhotonNetwork.Destroy(gameObject);
 
                     _onCoinDestroy?.Invoke();
-                }
-                else
-                {
-                    GetComponent<Renderer>().enabled = false;
                 }
             }
         }

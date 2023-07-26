@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SpaceCombat.Gameplay.Ship
 {
@@ -87,8 +88,17 @@ namespace SpaceCombat.Gameplay.Ship
 
             if (aliveShipsCount == 1)
             {
-                Debug.Log("WINNER PLAYER - " + actorNumber);
+                UpdateWinPlayerProperty(actorNumber);
             }
+        }
+
+        private void UpdateWinPlayerProperty(int winnerNumber)
+        {
+            _photonView.Owner.SetCustomProperties(
+                new Hashtable
+                {
+                    { AsteroidsGame.WINNER_NUMBER, winnerNumber }
+                });
         }
 
         #endregion

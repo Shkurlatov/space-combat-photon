@@ -26,7 +26,7 @@ namespace SpaceCombat.Gameplay.Ship
 
                 Points--;
 
-                UpdateShipProperties();
+                UpdateShipProtectionProperty();
 
                 if (Points < 1)
                 {
@@ -35,7 +35,7 @@ namespace SpaceCombat.Gameplay.Ship
             }
         }
 
-        private void UpdateShipProperties()
+        private void UpdateShipProtectionProperty()
         {
             _photonView.Owner.SetCustomProperties(
                 new Hashtable 

@@ -11,9 +11,10 @@ namespace SpaceCombat
 
         public const int SHIP_MAX_PROTECTION = 10;
 
-        public const string SHIP_PROTECTION = "PlayerLives";
         public const string PLAYER_READY = "IsPlayerReady";
         public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
+        public const string SHIP_PROTECTION = "PlayerHealthPoints";
+        public const string WINNER_NUMBER = "WinPlayerNumber";
 
         public static Color GetColor(int colorChoice)
         {
@@ -30,6 +31,23 @@ namespace SpaceCombat
             }
 
             return Color.black;
+        }
+
+        public static string GetColorName(int colorChoice)
+        {
+            switch (colorChoice)
+            {
+                case 0: return "Red";
+                case 1: return "Green";
+                case 2: return "Blue";
+                case 3: return "Yellow";
+                case 4: return "Cyan";
+                case 5: return "Grey";
+                case 6: return "Magneta";
+                case 7: return "White";
+            }
+
+            return "Unknown";
         }
     }
 }
