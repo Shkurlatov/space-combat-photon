@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using SpaceCombat.Infrastructure.States;
 using SpaceCombat.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace SpaceCombat.Lobby
 {
     public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
+        private const string GAME = "Game";
+
         [Header("Login Panel")]
         public GameObject LoginPanel;
 
@@ -42,6 +45,17 @@ namespace SpaceCombat.Lobby
         private Dictionary<string, RoomInfo> cachedRoomList;
         private Dictionary<string, GameObject> roomListEntries;
         private Dictionary<int, GameObject> playerListEntries;
+
+
+
+        private IGameStateMachine _stateMachine;
+
+        public void Initialize(IGameStateMachine stateMachine)
+        {
+            _stateMachine = stateMachine;
+        }
+
+
 
         #region UNITY
 
@@ -274,7 +288,9 @@ namespace SpaceCombat.Lobby
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("Game");
+            _stateMachine.Enter<GameLoadState, string>(GAME);
+
+            PhotonNetwork.LoadLevel(GAME);
         }
 
         #endregion

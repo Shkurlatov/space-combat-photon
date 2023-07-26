@@ -5,54 +5,54 @@ using System.Threading.Tasks;
 
 namespace SpaceCombat.Infrastructure.States
 {
-    public class LoadSceneState : IPayloadedState<string>
+    public class GameLoadState : IPayloadedState<string>
     {
         private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IDataProvider _gameStaticData;
         private readonly IGameFactory _gameFactory;
+        private readonly IUIFactory _uiFactory;
 
-        public LoadSceneState(
+        public GameLoadState(
             IGameStateMachine stateMachine,
             SceneLoader sceneLoader,
             IDataProvider gameStaticData,
-            IGameFactory gameFactory)
+            IGameFactory gameFactory,
+            IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _gameStaticData = gameStaticData;
             _gameFactory = gameFactory;
+            _uiFactory = uiFactory;
         }
 
         public void Enter(string sceneName)
         {
+            _sceneLoader.ShowCurtain();
             _gameFactory.Cleanup();
-            _sceneLoader.Load(sceneName, OnLoaded);
+            _sceneLoader.Await(sceneName, OnLoaded);
         }
 
-        public void Exit() => 
+        public void Exit()
+        {
             _sceneLoader.HideCurtain();
-
-        private async void OnLoaded()
-        {
-            await InitUIRoot();
-            await InitGameWorld();
-            InformProgressReaders();
-
-            _stateMachine.Enter<GameLobbyState>();
         }
 
-        private async Task InitUIRoot()
+        private void OnLoaded()
         {
-            await Task.Delay(100);
+            InitUIRoot();
+            InitGameWorld();
+
+            _stateMachine.Enter<GameState>();
         }
 
-        private async Task InitGameWorld()
+        private void InitUIRoot()
         {
-            await Task.Delay(100);
+
         }
 
-        private void InformProgressReaders()
+        private void InitGameWorld()
         {
 
         }

@@ -1,27 +1,20 @@
 ﻿namespace SpaceCombat.Infrastructure.States
 {
-    public class ConnectionState : IState
+    public class LobbyState : IState
     {
         private readonly IGameStateMachine _stateMachine;
 
-        public ConnectionState(IGameStateMachine stateMachine)
+        public LobbyState(IGameStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
         }
 
         public void Enter()
         {
-            LoadProgressOrInitNew();
 
-            _stateMachine.Enter<LoadSceneState, string>("Lobby");
         }
 
         public void Exit()
-        {
-
-        }
-
-        private void LoadProgressOrInitNew()
         {
 
         }

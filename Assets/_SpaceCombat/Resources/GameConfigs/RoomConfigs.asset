@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58281ce1f1a590f4ab82e15ab3e07b6b, type: 3}
   m_Name: RoomConfigs
   m_EditorClassIdentifier: 
-  MaxPlayersCount: 0
+  MaxPlayersAmount: 4

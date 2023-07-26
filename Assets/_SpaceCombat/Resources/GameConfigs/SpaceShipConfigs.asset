@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c12d7f35bf42242afd6436a159e173, type: 3}
   m_Name: SpaceShipConfigs
   m_EditorClassIdentifier: 
-  RotationSpeed: 0
-  MovementSpeed: 0
-  ReloadTime: 0
-  ProtectionPoints: 0
+  RotationSpeed: 36
+  MovementSpeed: 24
+  ReloadTime: 0.5
+  ProtectionPoints: 10

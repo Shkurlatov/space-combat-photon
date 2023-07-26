@@ -18,6 +18,9 @@ namespace SpaceCombat.Infrastructure.Bootstrap
         public void Load(string name, Action onLoaded = null) =>
             StartCoroutine(LoadScene(name, onLoaded));
 
+        public void Await(string name, Action onLoaded = null) =>
+            StartCoroutine(AwaitScene(name, onLoaded));
+
         public void HideCurtain() =>
             _loadingCurtain.Hide();
 
@@ -32,6 +35,16 @@ namespace SpaceCombat.Infrastructure.Bootstrap
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
 
             while (!waitNextScene.isDone)
+            {
+                yield return null;
+            }
+
+            onLoaded?.Invoke();
+        }
+
+        private IEnumerator AwaitScene(string nextScene, Action onLoaded)
+        {
+            while (SceneManager.GetActiveScene().name != nextScene)
             {
                 yield return null;
             }

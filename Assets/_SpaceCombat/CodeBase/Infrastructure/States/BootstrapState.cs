@@ -1,14 +1,16 @@
-﻿using SpaceCombat.Infrastructure.GameResources;
-using SpaceCombat.Infrastructure.Bootstrap;
+﻿using SpaceCombat.Infrastructure.Bootstrap;
 using SpaceCombat.Infrastructure.Factory;
-using SpaceCombat.Infrastructure.Services;
 using SpaceCombat.Infrastructure.GameConfigs;
+using SpaceCombat.Infrastructure.GameResources;
+using SpaceCombat.Infrastructure.Input;
+using SpaceCombat.Infrastructure.Services;
+using System;
 
 namespace SpaceCombat.Infrastructure.States
 {
     public class BootstrapState : IState
     {
-        private const string Bootstrap = "Loading";
+        private const string LOADING = "Loading";
 
         private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -24,21 +26,25 @@ namespace SpaceCombat.Infrastructure.States
         }
 
         public void Enter() =>
-            _sceneLoader.Load(Bootstrap, onLoaded: EnterLoadLevel);
+            _sceneLoader.Load(LOADING, onLoaded: EnterLoadLevel);
 
         public void Exit()
         {
 
         }
 
-        private void EnterLoadLevel() =>
-            _stateMachine.Enter<ConnectionState>();
+        private void EnterLoadLevel()
+        {
+            _stateMachine.Enter<LobbyLoadState, string>("Lobby");
+        }
 
         private void RegisterServices()
         {
             RegisterAssetProvider();
-            RegisterGameStaticData();
+            RegisterDataProvider();
             RegisterGameFactory();
+            RegisterUIFactory();
+            RegisterInputService();
         }
 
         private void RegisterAssetProvider()
@@ -46,11 +52,11 @@ namespace SpaceCombat.Infrastructure.States
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
         }
 
-        private void RegisterGameStaticData()
+        private void RegisterDataProvider()
         {
-            IDataProvider gameStaticData = new DataProvider();
+            IDataProvider dataProvider = new DataProvider();
 
-            _services.RegisterSingle(gameStaticData);
+            _services.RegisterSingle(dataProvider);
         }
 
         private void RegisterGameFactory()
@@ -58,6 +64,18 @@ namespace SpaceCombat.Infrastructure.States
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                             _services.Single<IAssetProvider>(),
                             _services.Single<IDataProvider>()));
+        }
+
+        private void RegisterUIFactory()
+        {
+            _services.RegisterSingle<IUIFactory>(new UIFactory(
+                _services.Single<IAssetProvider>(),
+                _services.Single<IDataProvider>()));
+        }
+
+        private void RegisterInputService()
+        {
+            _services.RegisterSingle<IInputService>(new MobileInputService());
         }
     }
 }

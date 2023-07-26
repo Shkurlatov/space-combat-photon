@@ -11,13 +11,9 @@ namespace SpaceCombat.Lobby
         [Header("UI References")]
         public Text ConnectionStatusText;
 
-        #region UNITY
-
         public void Update()
         {
             ConnectionStatusText.text = connectionStatusMessage + PhotonNetwork.NetworkClientState;
         }
-
-        #endregion
     }
 }

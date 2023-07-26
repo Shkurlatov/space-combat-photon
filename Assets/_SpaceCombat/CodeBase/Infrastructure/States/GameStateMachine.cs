@@ -17,9 +17,10 @@ namespace SpaceCombat.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(ConnectionState)] = new ConnectionState(this),
-                [typeof(LoadSceneState)] = new LoadSceneState(this, sceneLoader, services.Single<IDataProvider>(), services.Single<IGameFactory>()),
-                [typeof(GameLobbyState)] = new GameLobbyState(this),
+                [typeof(LobbyLoadState)] = new LobbyLoadState(this, sceneLoader, services.Single<IDataProvider>(), services.Single<IUIFactory>()),
+                [typeof(LobbyState)] = new LobbyState(this),
+                [typeof(GameLoadState)] = new GameLoadState(this, sceneLoader, services.Single<IDataProvider>(), services.Single<IGameFactory>(), services.Single<IUIFactory>()),
+                [typeof(GameState)] = new GameState(this)
             };
         }
 

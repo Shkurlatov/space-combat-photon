@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f149fe36e29daa4fa43a145da774efe, type: 3}
   m_Name: CombatConfigs
   m_EditorClassIdentifier: 
-  CoinsAmount: 0
-  BulletSpeed: 0
-  BulletDestroyTime: 0
+  CoinsAmount: 7
+  BulletSpeed: 100
+  BulletDestroyTime: 3

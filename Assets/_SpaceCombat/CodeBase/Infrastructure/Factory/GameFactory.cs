@@ -1,7 +1,7 @@
-﻿using SpaceCombat.Infrastructure.GameResources;
+﻿using Photon.Pun;
 using SpaceCombat.Infrastructure.GameConfigs;
+using SpaceCombat.Infrastructure.GameResources;
 using SpaceCombat.Utilities;
-using Photon.Pun;
 using UnityEngine;
 
 namespace SpaceCombat.Infrastructure.Factory
