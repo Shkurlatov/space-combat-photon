@@ -26,7 +26,7 @@ namespace SpaceCombat.Gameplay
                 entry.transform.SetParent(gameObject.transform);
                 entry.transform.localScale = Vector3.one;
                 entry.GetComponent<Text>().color = AsteroidsGame.GetColor(p.GetPlayerNumber());
-                entry.GetComponent<Text>().text = string.Format("{0}\nScore: {1}\nLives: {2}", p.NickName, p.GetScore(), AsteroidsGame.PLAYER_MAX_LIVES);
+                entry.GetComponent<Text>().text = string.Format("{0}\nScore: {1}\nLives: {2}", p.NickName, p.GetScore(), AsteroidsGame.SHIP_MAX_PROTECTION);
 
                 playerListEntries.Add(p.ActorNumber, entry);
             }
@@ -51,7 +51,7 @@ namespace SpaceCombat.Gameplay
             GameObject entry;
             if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
             {
-                entry.GetComponent<Text>().text = string.Format("{0}\nScore: {1}\nLives: {2}", targetPlayer.NickName, targetPlayer.GetScore(), targetPlayer.CustomProperties[AsteroidsGame.PLAYER_LIVES]);
+                entry.GetComponent<Text>().text = string.Format("{0}\nScore: {1}\nLives: {2}", targetPlayer.NickName, targetPlayer.GetScore(), targetPlayer.CustomProperties[AsteroidsGame.SHIP_PROTECTION]);
             }
         }
 

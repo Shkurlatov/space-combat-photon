@@ -1,14 +1,14 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
+using SpaceCombat.Gameplay.Factory;
+using SpaceCombat.Gameplay.Network;
+using SpaceCombat.Gameplay.Ship;
+using SpaceCombat.Infrastructure.Input;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Photon.Pun;
-using SpaceCombat.Infrastructure.Input;
-using SpaceCombat.Gameplay.Ship;
-using SpaceCombat.Gameplay.Network;
-using SpaceCombat.Gameplay.Factory;
 
 namespace SpaceCombat.Gameplay
 {
@@ -16,15 +16,15 @@ namespace SpaceCombat.Gameplay
     {
         public static GameManager Instance = null;
 
-        public Text InfoText;
-
-        public GameObject[] AsteroidPrefabs;
+        public GameObject UIRootPrefab;
 
         #region UNITY
 
         public void Awake()
         {
             Instance = this;
+
+            Instantiate(UIRootPrefab);
         }
 
         public override void OnEnable()
@@ -44,8 +44,7 @@ namespace SpaceCombat.Gameplay
 
             IGameFactory gameFactory = new GameFactory();
 
-            GameObject photonNetwork = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity, 0);
-            photonNetwork.GetComponent<CoinsHandler>().Initialize(gameFactory, 7);
+            GetComponent<CoinsHandler>().Initialize(gameFactory, 7);
         }
 
         public override void OnDisable()
@@ -97,8 +96,6 @@ namespace SpaceCombat.Gameplay
 
             while (timer > 0.0f)
             {
-                InfoText.text = string.Format("Player {0} won with {1} points.\n\n\nReturning to login screen in {2} seconds.", winner, score, timer.ToString("n2"));
-
                 yield return new WaitForEndOfFrame();
 
                 timer -= Time.deltaTime;
@@ -136,7 +133,7 @@ namespace SpaceCombat.Gameplay
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            if (changedProps.ContainsKey(AsteroidsGame.PLAYER_LIVES))
+            if (changedProps.ContainsKey(AsteroidsGame.SHIP_PROTECTION))
             {
                 CheckEndOfGame();
                 return;
@@ -164,8 +161,7 @@ namespace SpaceCombat.Gameplay
                 else
                 {
                     // not all players loaded yet. wait:
-                    Debug.Log("setting text waiting for players! ",this.InfoText);
-                    InfoText.text = "Waiting for other players...";
+                    Debug.Log("setting text waiting for players! ");
                 }
             }
         
@@ -195,7 +191,7 @@ namespace SpaceCombat.Gameplay
 
             IInputService input = new MobileInputService();
 
-            GameObject spaceShip = PhotonNetwork.Instantiate("Spaceship", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            GameObject spaceShip = PhotonNetwork.Instantiate("Game/Spaceship", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
             spaceShip.GetComponent<ShipMovement>().Initialize(input, screenSize);
             spaceShip.GetComponent<ShipMovement>().enabled = true;
@@ -236,7 +232,7 @@ namespace SpaceCombat.Gameplay
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 object lives;
-                if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
+                if (p.CustomProperties.TryGetValue(AsteroidsGame.SHIP_PROTECTION, out lives))
                 {
                     if ((int) lives > 0)
                     {

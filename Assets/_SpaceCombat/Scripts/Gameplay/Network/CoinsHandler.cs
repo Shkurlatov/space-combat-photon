@@ -12,9 +12,12 @@ namespace SpaceCombat.Gameplay.Network
         {
             _gameFactory = networkFactory;
 
-            for (int i = 0; i < coinsCount; i++)
+            if (PhotonNetwork.IsMasterClient)
             {
-                SpawnCoin();
+                for (int i = 0; i < coinsCount; i++)
+                {
+                    SpawnCoin();
+                } 
             }
         }
 

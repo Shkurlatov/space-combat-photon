@@ -6,7 +6,7 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipAttack : MonoBehaviour
     {
-        public float ReloadTime = 0.2f;
+        public float ReloadTime = 0.5f;
 
         private PhotonView _photonView;
         private IInputService _input;
