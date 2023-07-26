@@ -41,6 +41,12 @@ namespace SpaceCombat.Gameplay.Hud
                 {
                     _coinsCounterText.text = collectedCoins.ToString();
                 }
+
+                if (currentProtection < 1)
+                {
+                    _protectionImage.enabled = false;
+                    _coinsCounterText.enabled = false;
+                }
             }
         }
     }

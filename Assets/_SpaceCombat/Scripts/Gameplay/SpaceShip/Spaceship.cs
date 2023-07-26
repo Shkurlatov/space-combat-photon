@@ -1,14 +1,9 @@
 ﻿using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SpaceCombat.Gameplay.Ship
 {
-    public class LookAtCamera
-    {
-
-    }
     public class SpaceShip : MonoBehaviour
     {
         public float RotationSpeed = 30.0f;
@@ -17,31 +12,15 @@ namespace SpaceCombat.Gameplay.Ship
         public ParticleSystem Destruction;
         public GameObject EngineTrail;
 
-        public bool IsDestroyed;
-
         private PhotonView _photonView;
-
-#pragma warning disable 0109
-        //private new Rigidbody rigidbody;
-        private new Collider collider;
-        private new Renderer renderer;
-#pragma warning restore 0109
-
-        //private float rotation = 0.0f;
-        //private float acceleration = 0.0f;
-        //private float shootingTimer = 0.0f;
-
-        //private bool controllable = true;
-
-        #region UNITY
+        private Collider _collider;
+        private Renderer _renderer;
 
         public void Awake()
         {
             _photonView = GetComponent<PhotonView>();
-
-            //rigidbody = GetComponent<Rigidbody>();
-            collider = GetComponent<Collider>();
-            renderer = GetComponent<Renderer>();
+            _collider = GetComponent<Collider>();
+            _renderer = GetComponent<Renderer>();
         }
 
         public void Start()
@@ -52,55 +31,14 @@ namespace SpaceCombat.Gameplay.Ship
             }
         }
 
-        #endregion
-
-        #region PUN CALLBACKS
-
         [PunRPC]
         public void DestroyShip()
         {
-            IsDestroyed = true;
-
-            collider.enabled = false;
-            renderer.enabled = false;
-
-            //controllable = false;
+            _collider.enabled = false;
+            _renderer.enabled = false;
 
             EngineTrail.SetActive(false);
             Destruction.Play();
-
-            CheckWinner();
         }
-
-        private void CheckWinner()
-        {
-            int aliveShipsCount = 0;
-            int actorNumber = 0;
-
-            foreach (SpaceShip ship in FindObjectsOfType<SpaceShip>())
-            {
-                if (!ship.IsDestroyed)
-                {
-                    aliveShipsCount++;
-                    actorNumber = ship.gameObject.GetPhotonView().Owner.ActorNumber;
-                }
-            }
-
-            if (aliveShipsCount == 1)
-            {
-                UpdateWinPlayerProperty(actorNumber);
-            }
-        }
-
-        private void UpdateWinPlayerProperty(int winnerNumber)
-        {
-            _photonView.Owner.SetCustomProperties(
-                new Hashtable
-                {
-                    { AsteroidsGame.WINNER_NUMBER, winnerNumber }
-                });
-        }
-
-        #endregion
     }
 }

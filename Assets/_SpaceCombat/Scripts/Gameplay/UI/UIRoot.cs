@@ -9,53 +9,85 @@ namespace SpaceCombat.Gameplay.UI
 {
     public class UIRoot : MonoBehaviourPunCallbacks
     {
+        [SerializeField] private GameObject ControlHudPrefab;
         [SerializeField] private GameObject PopupPrefab;
 
         private bool hasWinner;
+        private GameObject _controlHud;
 
-        private List<Player> players;
-
-        public void Awake()
+        public override void OnEnable()
         {
-            players = new List<Player>();
+            base.OnEnable();
 
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                players.Add(player);
-            }
+            CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+
+            CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
         }
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            if (!hasWinner)
+            if (hasWinner)
             {
-                int winnerNumber = (int)targetPlayer.CustomProperties[AsteroidsGame.WINNER_NUMBER];
+                return;
+            }
 
-                if (winnerNumber > 0)
+            int shipProtection = (int)targetPlayer.CustomProperties[AsteroidsGame.SHIP_PROTECTION];
+
+            if (shipProtection <= 0)
+            {
+                if (targetPlayer.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
                 {
-                    hasWinner = true;
-
-                    ShowWinnerPopup(winnerNumber);
+                    _controlHud.SetActive(false);
                 }
+
+                CheckWinner();
             }
         }
 
-        private void ShowWinnerPopup(int winnerNumber)
+        private void CheckWinner()
         {
-            foreach (Player player in players)
+            List<int> alivePlayerNumbers = new List<int>();
+            Player alivePlayer = null;
+
+            foreach (Player player in PhotonNetwork.PlayerList)
             {
-                if (player != null && player.ActorNumber == winnerNumber)
+                int shipProtection = (int)player.CustomProperties[AsteroidsGame.SHIP_PROTECTION];
+
+                if (shipProtection > 0)
                 {
-                    int collectedCoins = player.GetScore();
-                    Color textColor = AsteroidsGame.GetColor(winnerNumber - 1);
-                    string colorName = AsteroidsGame.GetColorName(winnerNumber - 1);
-
-                    string popupText = $"Winner - {colorName} Player!\n\nCollected {collectedCoins} Coins";
-
-                    Popup popup = Instantiate(PopupPrefab, transform).GetComponent<Popup>();
-                    popup.UpdateText(popupText, textColor);
+                    alivePlayerNumbers.Add(player.ActorNumber);
+                    alivePlayer = player;
                 }
             }
+
+            if (alivePlayerNumbers.Count == 1)
+            {
+                hasWinner = true;
+
+                ShowWinnerPopup(alivePlayer);
+            }
+        }
+
+        private void ShowWinnerPopup(Player winner)
+        {
+            int collectedCoins = winner.GetScore();
+            Color textColor = AsteroidsGame.GetColor(winner.ActorNumber - 1);
+            string colorName = AsteroidsGame.GetColorName(winner.ActorNumber - 1);
+
+            string popupText = $"Winner - {colorName} Player!\n\nCollected  {collectedCoins}  Coins";
+
+            Popup popup = Instantiate(PopupPrefab, transform).GetComponent<Popup>();
+            popup.UpdateText(popupText, textColor);
+        }
+
+        private void OnCountdownTimerIsExpired()
+        {
+            _controlHud = Instantiate(ControlHudPrefab);
         }
     }
 }

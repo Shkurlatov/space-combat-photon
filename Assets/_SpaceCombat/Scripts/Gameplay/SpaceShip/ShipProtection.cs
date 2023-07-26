@@ -22,7 +22,9 @@ namespace SpaceCombat.Gameplay.Ship
             if (PhotonNetwork.IsMasterClient)
             {
                 if (_isDestroyed)
+                {
                     return;
+                }
 
                 Points--;
 

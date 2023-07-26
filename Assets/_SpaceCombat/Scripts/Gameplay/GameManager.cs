@@ -1,14 +1,14 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
+using SpaceCombat.Gameplay.Factory;
+using SpaceCombat.Gameplay.Network;
+using SpaceCombat.Gameplay.Ship;
+using SpaceCombat.Infrastructure.Input;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Photon.Pun;
-using SpaceCombat.Infrastructure.Input;
-using SpaceCombat.Gameplay.Ship;
-using SpaceCombat.Gameplay.Network;
-using SpaceCombat.Gameplay.Factory;
 
 namespace SpaceCombat.Gameplay
 {
@@ -16,15 +16,15 @@ namespace SpaceCombat.Gameplay
     {
         public static GameManager Instance = null;
 
-        public Text InfoText;
-
-        public GameObject[] AsteroidPrefabs;
+        public GameObject UIRootPrefab;
 
         #region UNITY
 
         public void Awake()
         {
             Instance = this;
+
+            Instantiate(UIRootPrefab);
         }
 
         public override void OnEnable()
@@ -96,8 +96,6 @@ namespace SpaceCombat.Gameplay
 
             while (timer > 0.0f)
             {
-                InfoText.text = string.Format("Player {0} won with {1} points.\n\n\nReturning to login screen in {2} seconds.", winner, score, timer.ToString("n2"));
-
                 yield return new WaitForEndOfFrame();
 
                 timer -= Time.deltaTime;
@@ -163,8 +161,7 @@ namespace SpaceCombat.Gameplay
                 else
                 {
                     // not all players loaded yet. wait:
-                    Debug.Log("setting text waiting for players! ",this.InfoText);
-                    InfoText.text = "Waiting for other players...";
+                    Debug.Log("setting text waiting for players! ");
                 }
             }
         
