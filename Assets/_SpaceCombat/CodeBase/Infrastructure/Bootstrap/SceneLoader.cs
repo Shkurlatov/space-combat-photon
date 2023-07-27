@@ -9,20 +9,30 @@ namespace SpaceCombat.Infrastructure.Bootstrap
     {
         [SerializeField] private LoadingCurtain _loadingCurtain;
 
-        private void Awake() =>
+        private void Awake()
+        {
             DontDestroyOnLoad(this);
+        }
 
-        public void ShowCurtain() =>
+        public void ShowCurtain()
+        {
             _loadingCurtain.Show();
+        }
 
-        public void Load(string name, Action onLoaded = null) =>
+        public void Load(string name, Action onLoaded = null)
+        {
             StartCoroutine(LoadScene(name, onLoaded));
+        }
 
-        public void Await(string name, Action onLoaded = null) =>
+        public void Await(string name, Action onLoaded = null)
+        {
             StartCoroutine(AwaitScene(name, onLoaded));
+        }
 
-        public void HideCurtain() =>
+        public void HideCurtain()
+        {
             _loadingCurtain.Hide();
+        }
 
         private IEnumerator LoadScene(string nextScene, Action onLoaded)
         {

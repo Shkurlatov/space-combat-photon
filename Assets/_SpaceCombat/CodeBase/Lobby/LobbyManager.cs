@@ -46,17 +46,6 @@ namespace SpaceCombat.Lobby
         private Dictionary<string, GameObject> roomListEntries;
         private Dictionary<int, GameObject> playerListEntries;
 
-
-
-        private IGameStateMachine _stateMachine;
-
-        public void Initialize(IGameStateMachine stateMachine)
-        {
-            _stateMachine = stateMachine;
-        }
-
-
-
         #region UNITY
 
         public void Awake()
@@ -287,8 +276,6 @@ namespace SpaceCombat.Lobby
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-
-            _stateMachine.Enter<GameLoadState, string>(GAME);
 
             PhotonNetwork.LoadLevel(GAME);
         }

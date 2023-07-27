@@ -9,26 +9,19 @@ namespace SpaceCombat.Infrastructure.Factory
     public class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
-        private readonly IDataProvider _gameStaticData;
+        private readonly IDataProvider _dataProvider;
 
         private ScreenSize _screenSize;
 
-        public GameFactory(
-            IAssetProvider assetProvider,
-            IDataProvider gameStaticData)
+        public GameFactory(IAssetProvider assetProvider, IDataProvider dataProvider)
         {
             _assetProvider = assetProvider;
-            _gameStaticData = gameStaticData;
+            _dataProvider = dataProvider;
         }
 
         public void SetScreenSize()
         {
             _screenSize = new ScreenSize(Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize);
-        }
-
-        public GameObject InstantiateCombatManager()
-        {
-            return _assetProvider.Instantiate(AssetPath.COMBAT_MANAGER_PATH);
         }
 
         public GameObject InstantiateSpaceShip()

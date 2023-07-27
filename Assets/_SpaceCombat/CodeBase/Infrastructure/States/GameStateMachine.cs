@@ -4,6 +4,7 @@ using SpaceCombat.Infrastructure.Services;
 using SpaceCombat.Infrastructure.Configs;
 using System;
 using System.Collections.Generic;
+using SpaceCombat.Infrastructure.Input;
 
 namespace SpaceCombat.Infrastructure.States
 {
@@ -19,8 +20,9 @@ namespace SpaceCombat.Infrastructure.States
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
                 [typeof(LobbyLoadState)] = new LobbyLoadState(this, sceneLoader, services.Single<IDataProvider>(), services.Single<IUIFactory>()),
                 [typeof(LobbyState)] = new LobbyState(this),
-                [typeof(GameLoadState)] = new GameLoadState(this, sceneLoader, services.Single<IDataProvider>(), services.Single<IGameFactory>(), services.Single<IUIFactory>()),
-                [typeof(GameState)] = new GameState(this)
+                [typeof(GameState)] = new GameState(
+                    this, services.Single<IInputService>(), services.Single<IDataProvider>(), 
+                    services.Single<IGameFactory>(), services.Single<IUIFactory>())
             };
         }
 
@@ -46,7 +48,9 @@ namespace SpaceCombat.Infrastructure.States
             return state;
         }
 
-        private TState GetState<TState>() where TState : class, IExitableState =>
-            _states[typeof(TState)] as TState;
+        private TState GetState<TState>() where TState : class, IExitableState
+        {
+            return _states[typeof(TState)] as TState;
+        }
     }
 }

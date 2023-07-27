@@ -11,7 +11,9 @@ namespace SpaceCombat.Infrastructure.Bootstrap
             GameBootstrapper bootstrapper = FindObjectOfType<GameBootstrapper>();
 
             if (bootstrapper == null)
+            {
                 Instantiate(GameBootstrapperPrefab);
+            }
         }
     }
 }

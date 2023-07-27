@@ -13,29 +13,48 @@ namespace SpaceCombat.Gameplay.Combat
 {
     public class CombatManager : MonoBehaviourPunCallbacks
     {
+        public static CombatManager Instance = null;
+
+        private IInputService _input;
         private IGameFactory _gameFactory;
         private CoinsHandler _coinsHandler;
+
+        public void Awake()
+        {
+            Instance = this;
+        }
+
+        //public void Start()
+        //{
+        //    Hashtable props = new Hashtable
+        //    {
+        //        {AsteroidsGame.PLAYER_LOADED_LEVEL, true}
+        //    };
+        //    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        //}
 
         public override void OnEnable()
         {
             base.OnEnable();
+            //Debug.Log("Instatiate UI Root");
 
             CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
         }
 
-        public void Initialize(IGameFactory gameFactory, int coinsAmount)
+        public void Initialize(IInputService input, IGameFactory gameFactory, int coinsAmount)
         {
-            Hashtable props = new Hashtable
-            {
-                {AsteroidsGame.PLAYER_LOADED_LEVEL, true}
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
+            _input = input;
             _gameFactory = gameFactory;
             _gameFactory.SetScreenSize();
 
             _coinsHandler = new CoinsHandler(_gameFactory);
             _coinsHandler.SeedSpace(coinsAmount);
+
+            Hashtable props = new Hashtable
+            {
+                {AsteroidsGame.PLAYER_LOADED_LEVEL, true}
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
         public override void OnDisable()
@@ -147,13 +166,7 @@ namespace SpaceCombat.Gameplay.Combat
                         CountdownTimer.SetStartTime();
                     }
                 }
-                else
-                {
-                    // not all players loaded yet. wait:
-                    Debug.Log("setting text waiting for players! ");
-                }
             }
-        
         }
 
         #endregion
@@ -178,14 +191,12 @@ namespace SpaceCombat.Gameplay.Combat
             Vector3 position = new Vector3(x, 0.0f, z);
             Quaternion rotation = Quaternion.Euler(0.0f, angularStart, 0.0f);
 
-            IInputService input = new MobileInputService();
-
             GameObject spaceShip = PhotonNetwork.Instantiate("Combat/SpaceShip", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
-            spaceShip.GetComponent<ShipMovement>().Initialize(input, screenSize);
+            spaceShip.GetComponent<ShipMovement>().Initialize(_input, screenSize);
             spaceShip.GetComponent<ShipMovement>().enabled = true;
 
-            spaceShip.GetComponent<ShipAttack>().Initialize(input);
+            spaceShip.GetComponent<ShipAttack>().Initialize(_input);
             spaceShip.GetComponent<ShipAttack>().enabled = true;
 
             if (PhotonNetwork.IsMasterClient)

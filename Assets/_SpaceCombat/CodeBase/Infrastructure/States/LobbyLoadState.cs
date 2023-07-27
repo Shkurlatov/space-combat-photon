@@ -1,8 +1,7 @@
 ﻿using SpaceCombat.Infrastructure.Bootstrap;
-using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Configs;
+using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Lobby;
-using UnityEngine;
 
 namespace SpaceCombat.Infrastructure.States
 {
@@ -16,12 +15,12 @@ namespace SpaceCombat.Infrastructure.States
         public LobbyLoadState(
             IGameStateMachine stateMachine,
             SceneLoader sceneLoader,
-            IDataProvider gameStaticData,
+            IDataProvider dataProvider,
             IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
-            _dataProvider = gameStaticData;
+            _dataProvider = dataProvider;
             _uiFactory = uiFactory;
         }
 
@@ -30,20 +29,21 @@ namespace SpaceCombat.Infrastructure.States
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
-        public void Exit() => 
+        public void Exit()
+        {
             _sceneLoader.HideCurtain();
+        }
 
         private void OnLoaded()
         {
-            InitLobbyMainPalel();
+            InitLobbyManager();
 
             _stateMachine.Enter<LobbyState>();
         }
 
-        private void InitLobbyMainPalel()
+        private void InitLobbyManager()
         {
-            LobbyManager lobbyMainPanel = _uiFactory.InstantiateLobbyManager().GetComponent<LobbyManager>();
-            lobbyMainPanel.Initialize(_stateMachine);
+            _uiFactory.InstantiateLobbyManager().GetComponent<LobbyManager>();
         }
     }
 }

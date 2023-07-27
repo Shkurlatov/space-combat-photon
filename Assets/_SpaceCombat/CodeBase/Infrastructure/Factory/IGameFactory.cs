@@ -6,7 +6,6 @@ namespace SpaceCombat.Infrastructure.Factory
     public interface IGameFactory : IService
     {
         void SetScreenSize();
-        GameObject InstantiateCombatManager();
         GameObject InstantiateSpaceShip();
         GameObject InstantiateCoin();
         GameObject InstantiateBullet();

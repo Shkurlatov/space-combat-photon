@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
+using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,15 @@ namespace SpaceCombat.Gameplay.UI
         [SerializeField] private GameObject ControlHudPrefab;
         [SerializeField] private GameObject PopupPrefab;
 
+        private IUIFactory _uiFactory;
+
         private bool hasWinner;
         private GameObject _controlHud;
+
+        public void Initialize(IUIFactory uiFactory)
+        {
+            _uiFactory = uiFactory;
+        }
 
         public override void OnEnable()
         {
@@ -70,25 +78,13 @@ namespace SpaceCombat.Gameplay.UI
             {
                 hasWinner = true;
 
-                ShowWinnerPopup(alivePlayer);
+                _uiFactory.InstantiatePopup(alivePlayer, gameObject.transform);
             }
-        }
-
-        private void ShowWinnerPopup(Player winner)
-        {
-            int collectedCoins = winner.GetScore();
-            Color textColor = AsteroidsGame.GetColor(winner.ActorNumber - 1);
-            string colorName = AsteroidsGame.GetColorName(winner.ActorNumber - 1);
-
-            string popupText = $"Winner - {colorName} Player !\n\nCollected  {collectedCoins}  Coins";
-
-            Popup popup = Instantiate(PopupPrefab, transform).GetComponent<Popup>();
-            popup.UpdateText(popupText, textColor);
         }
 
         private void OnCountdownTimerIsExpired()
         {
-            _controlHud = Instantiate(ControlHudPrefab);
+            _controlHud = _uiFactory.InstantiateControlHud();
         }
     }
 }

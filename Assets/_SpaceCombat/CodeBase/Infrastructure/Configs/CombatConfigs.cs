@@ -10,7 +10,7 @@ namespace SpaceCombat.Infrastructure.Configs
 
         [Range(80.0f, 200.0f)]
         public float BulletSpeed;
-
+        
         [Range(1.0f, 4.0f)]
         public float BulletDestroyTime;
     }

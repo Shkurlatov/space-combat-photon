@@ -2,11 +2,15 @@
 {
     public class ServiceContainer
     {
-        public void RegisterSingle<TService>(TService implementation) where TService : IService =>
+        public void RegisterSingle<TService>(TService implementation) where TService : IService
+        {
             Implementation<TService>.ServiceInstance = implementation;
+        }
 
-        public TService Single<TService>() where TService : IService =>
-            Implementation<TService>.ServiceInstance;
+        public TService Single<TService>() where TService : IService
+        {
+            return Implementation<TService>.ServiceInstance;
+        }
 
         private static class Implementation<TService> where TService : IService
         {
