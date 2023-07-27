@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using SpaceCombat.Gameplay.Combat;
 using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Input;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace SpaceCombat.Gameplay.Ship
         private const string JUMP = "Jump";
         private const string FIRE = "Fire";
 
+        public GameObject BulletPrefab; 
+        
         private PhotonView _photonView;
 
         private IGameFactory _gameFactory;
@@ -48,9 +51,14 @@ namespace SpaceCombat.Gameplay.Ship
         [PunRPC]
         public void Fire(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
         {
-            float lag = (float) (PhotonNetwork.Time - info.SentServerTime);
+            float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
 
-            _gameFactory.InstantiateBullets(position, rotation, lag);
+            GameObject bullet = Instantiate(BulletPrefab, position, rotation);
+            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward), Mathf.Abs(lag));
+            bullet = Instantiate(BulletPrefab, position, rotation);
+            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward + Vector3.right * 0.1f), Mathf.Abs(lag));
+            bullet = Instantiate(BulletPrefab, position, rotation);
+            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward + Vector3.left * 0.1f), Mathf.Abs(lag));
         }
     }
 }

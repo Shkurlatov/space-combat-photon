@@ -71,7 +71,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.795
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -187,8 +187,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7513558004049759968}
+  - component: {fileID: 4804222538792009442}
   - component: {fileID: 1122169251709487777}
-  - component: {fileID: 7679388601800830104}
   m_Layer: 8
   m_Name: ShipHud
   m_TagString: Untagged
@@ -212,6 +212,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4804222538792009442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3582093346805036658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a869651124d8ce14782e356060a96bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _protectionImage: {fileID: 5457023990385396791}
+  _coinsCounterText: {fileID: 6913190654110685405}
 --- !u!114 &1122169251709487777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,21 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdcb7997c7637149aee8f8fba5e7688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7679388601800830104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3582093346805036658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a869651124d8ce14782e356060a96bb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxProtection: 10
-  _protectionImage: {fileID: 5457023990385396791}
-  _coinsCounterText: {fileID: 6913190654110685405}
 --- !u!1 &6599492853098540185
 GameObject:
   m_ObjectHideFlags: 0

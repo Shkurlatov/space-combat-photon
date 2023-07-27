@@ -8,7 +8,7 @@ namespace SpaceCombat.Infrastructure.Configs
         [Range(20, 50)]
         public float RotationSpeed;
 
-        [Range(15, 40)]
+        [Range(5, 20)]
         public float MovementSpeed;
 
         [Range(0.1f, 2.0f)]

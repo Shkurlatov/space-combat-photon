@@ -7,6 +7,8 @@ namespace SpaceCombat.Gameplay.Combat
 {
     public class Coin : MonoBehaviour
     {
+        private const string SPACE_SHIP = "SpaceShip";
+
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private PhotonView _photonView;
@@ -32,7 +34,7 @@ namespace SpaceCombat.Gameplay.Combat
                 return;
             }
 
-            if (other.gameObject.CompareTag("SpaceShip"))
+            if (other.gameObject.CompareTag(SPACE_SHIP))
             {
                 _isDestroyed = true;
                 _spriteRenderer.enabled = false;
