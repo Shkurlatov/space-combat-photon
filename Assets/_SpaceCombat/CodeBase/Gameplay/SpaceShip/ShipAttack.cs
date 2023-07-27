@@ -1,5 +1,5 @@
 ﻿using Photon.Pun;
-using SpaceCombat.Gameplay.Combat;
+using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Input;
 using UnityEngine;
 
@@ -7,37 +7,41 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipAttack : MonoBehaviour
     {
-        public float ReloadTime = 0.5f;
+        private const string JUMP = "Jump";
+        private const string FIRE = "Fire";
 
         private PhotonView _photonView;
+
+        private IGameFactory _gameFactory;
         private IInputService _input;
+        private float _reloadTime;
 
-        private float shootingTimer;
-
-        public GameObject BulletPrefab;
+        private float _shootingTimer;
 
         private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
         }
 
-        public void Initialize(IInputService input)
+        public void Initialize(IGameFactory gameFactory, IInputService input, float reloadTime)
         {
+            _gameFactory = gameFactory;
             _input = input;
+            _reloadTime = reloadTime;
         }
 
         public void Update()
         {
-            if ((_input.IsAttackButtonUp() || Input.GetButton("Jump")) && shootingTimer <= 0.0)
+            if ((_input.IsAttackButtonUp() || Input.GetButton(JUMP)) && _shootingTimer <= 0.0)
             {
-                shootingTimer = ReloadTime;
+                _shootingTimer = _reloadTime;
 
-                _photonView.RPC("Fire", RpcTarget.AllViaServer, GetComponent<Rigidbody>().position, GetComponent<Rigidbody>().rotation);
+                _photonView.RPC(FIRE, RpcTarget.AllViaServer, GetComponent<Rigidbody>().position, GetComponent<Rigidbody>().rotation);
             }
 
-            if (shootingTimer > 0.0f)
+            if (_shootingTimer > 0.0f)
             {
-                shootingTimer -= Time.deltaTime;
+                _shootingTimer -= Time.deltaTime;
             }
         }
         
@@ -46,12 +50,7 @@ namespace SpaceCombat.Gameplay.Ship
         {
             float lag = (float) (PhotonNetwork.Time - info.SentServerTime);
 
-            GameObject bullet = Instantiate(BulletPrefab, position, rotation);
-            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward), Mathf.Abs(lag));
-            bullet = Instantiate(BulletPrefab, position, rotation);
-            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward + Vector3.right * 0.1f), Mathf.Abs(lag));
-            bullet = Instantiate(BulletPrefab, position, rotation);
-            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward + Vector3.left * 0.1f), Mathf.Abs(lag));
+            _gameFactory.InstantiateBullets(position, rotation, lag);
         }
     }
 }

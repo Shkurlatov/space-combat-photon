@@ -1,9 +1,8 @@
 ﻿using SpaceCombat.Gameplay.Combat;
 using SpaceCombat.Gameplay.UI;
-using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Configs;
+using SpaceCombat.Infrastructure.Factory;
 using UnityEngine;
-using SpaceCombat.Infrastructure.Input;
 
 namespace SpaceCombat.Infrastructure.States
 {
@@ -12,20 +11,17 @@ namespace SpaceCombat.Infrastructure.States
         private const string COMBAT_MANAGER = "CombatManager";
 
         private readonly IGameStateMachine _stateMachine;
-        private readonly IInputService _input;
         private readonly IDataProvider _dataProvider;
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
 
         public GameState(
             IGameStateMachine stateMachine,
-            IInputService input,
             IDataProvider dataProvider,
             IGameFactory gameFactory,
             IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
-            _input = input;
             _dataProvider = dataProvider;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
@@ -51,7 +47,7 @@ namespace SpaceCombat.Infrastructure.States
         private void InitCombatManager()
         {
             GameObject combatManager = GameObject.FindGameObjectWithTag(COMBAT_MANAGER);
-            combatManager.GetComponent<CombatManager>().Initialize(_input, _gameFactory, _dataProvider.GetCombatConfigs().CoinsAmount);
+            combatManager.GetComponent<CombatManager>().Initialize(_gameFactory, _dataProvider.GetCombatConfigs().CoinsAmount);
         }
     }
 }

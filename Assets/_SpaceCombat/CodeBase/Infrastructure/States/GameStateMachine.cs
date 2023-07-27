@@ -1,10 +1,9 @@
 ﻿using SpaceCombat.Infrastructure.Bootstrap;
+using SpaceCombat.Infrastructure.Configs;
 using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Services;
-using SpaceCombat.Infrastructure.Configs;
 using System;
 using System.Collections.Generic;
-using SpaceCombat.Infrastructure.Input;
 
 namespace SpaceCombat.Infrastructure.States
 {
@@ -21,8 +20,7 @@ namespace SpaceCombat.Infrastructure.States
                 [typeof(LobbyLoadState)] = new LobbyLoadState(this, sceneLoader, services.Single<IDataProvider>(), services.Single<IUIFactory>()),
                 [typeof(LobbyState)] = new LobbyState(this),
                 [typeof(GameState)] = new GameState(
-                    this, services.Single<IInputService>(), services.Single<IDataProvider>(), 
-                    services.Single<IGameFactory>(), services.Single<IUIFactory>())
+                    this, services.Single<IDataProvider>(), services.Single<IGameFactory>(), services.Single<IUIFactory>())
             };
         }
 

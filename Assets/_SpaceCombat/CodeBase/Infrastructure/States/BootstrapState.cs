@@ -70,6 +70,7 @@ namespace SpaceCombat.Infrastructure.States
         private void RegisterGameFactory()
         {
             _services.RegisterSingle<IGameFactory>(new GameFactory(
+                            _services.Single<IInputService>(),
                             _services.Single<IAssetProvider>(),
                             _services.Single<IDataProvider>()));
         }
