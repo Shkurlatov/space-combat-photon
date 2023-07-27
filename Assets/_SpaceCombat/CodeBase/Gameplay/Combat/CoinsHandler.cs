@@ -2,19 +2,22 @@
 using SpaceCombat.Infrastructure.Factory;
 using UnityEngine;
 
-namespace SpaceCombat.Gameplay.Network
+namespace SpaceCombat.Gameplay.Combat
 {
-    public class CoinsHandler : MonoBehaviourPun
+    public class CoinsHandler
     {
-        private IGameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
 
-        public void Initialize(IGameFactory networkFactory, int coinsCount)
+        public CoinsHandler(IGameFactory gameFactory)
         {
-            _gameFactory = networkFactory;
+            _gameFactory = gameFactory;
+        }
 
+        public void SeedSpace(int coinsAmount)
+        {
             if (PhotonNetwork.IsMasterClient)
             {
-                for (int i = 0; i < coinsCount; i++)
+                for (int i = 0; i < coinsAmount; i++)
                 {
                     SpawnCoin();
                 } 
@@ -23,7 +26,7 @@ namespace SpaceCombat.Gameplay.Network
 
         private void SpawnCoin()
         {
-            GameObject coin = _gameFactory.SpawnCoin();
+            GameObject coin = _gameFactory.InstantiateCoin();
             coin.GetComponent<Coin>().Initialize(OnCoinDestroy);
         }
 

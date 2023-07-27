@@ -1,7 +1,8 @@
-﻿using SpaceCombat.Infrastructure.Bootstrap;
+﻿using SpaceCombat.Gameplay.Combat;
+using SpaceCombat.Infrastructure.Bootstrap;
 using SpaceCombat.Infrastructure.Factory;
-using SpaceCombat.Infrastructure.GameConfigs;
-using System.Threading.Tasks;
+using SpaceCombat.Infrastructure.Configs;
+using UnityEngine;
 
 namespace SpaceCombat.Infrastructure.States
 {
@@ -9,7 +10,7 @@ namespace SpaceCombat.Infrastructure.States
     {
         private readonly IGameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly IDataProvider _gameStaticData;
+        private readonly IDataProvider _dataProvider;
         private readonly IGameFactory _gameFactory;
         private readonly IUIFactory _uiFactory;
 
@@ -22,7 +23,7 @@ namespace SpaceCombat.Infrastructure.States
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
-            _gameStaticData = gameStaticData;
+            _dataProvider = gameStaticData;
             _gameFactory = gameFactory;
             _uiFactory = uiFactory;
         }
@@ -42,19 +43,20 @@ namespace SpaceCombat.Infrastructure.States
         private void OnLoaded()
         {
             InitUIRoot();
-            InitGameWorld();
+            InitCombatManager();
 
             _stateMachine.Enter<GameState>();
         }
 
         private void InitUIRoot()
         {
-
+            _uiFactory.InstantiateUIRoot();
         }
 
-        private void InitGameWorld()
+        private void InitCombatManager()
         {
-
+            GameObject combatManager = _gameFactory.InstantiateCombatManager();
+            combatManager.GetComponent<CombatManager>().Initialize(_gameFactory, _dataProvider.GetCombatConfigs().CoinsAmount);
         }
     }
 }

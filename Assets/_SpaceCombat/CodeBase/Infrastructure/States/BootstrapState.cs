@@ -1,6 +1,6 @@
 ﻿using SpaceCombat.Infrastructure.Bootstrap;
 using SpaceCombat.Infrastructure.Factory;
-using SpaceCombat.Infrastructure.GameConfigs;
+using SpaceCombat.Infrastructure.Configs;
 using SpaceCombat.Infrastructure.GameResources;
 using SpaceCombat.Infrastructure.Input;
 using SpaceCombat.Infrastructure.Services;
@@ -55,6 +55,7 @@ namespace SpaceCombat.Infrastructure.States
         private void RegisterDataProvider()
         {
             IDataProvider dataProvider = new DataProvider();
+            dataProvider.LoadConfigs();
 
             _services.RegisterSingle(dataProvider);
         }

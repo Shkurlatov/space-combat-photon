@@ -1,6 +1,6 @@
 ﻿using SpaceCombat.Infrastructure.Bootstrap;
 using SpaceCombat.Infrastructure.Factory;
-using SpaceCombat.Infrastructure.GameConfigs;
+using SpaceCombat.Infrastructure.Configs;
 using SpaceCombat.Lobby;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ namespace SpaceCombat.Infrastructure.States
 
         private void InitLobbyMainPalel()
         {
-            LobbyMainPanel lobbyMainPanel = _uiFactory.CreateMainLobbyPanel().GetComponent<LobbyMainPanel>();
+            LobbyManager lobbyMainPanel = _uiFactory.InstantiateLobbyManager().GetComponent<LobbyManager>();
             lobbyMainPanel.Initialize(_stateMachine);
         }
     }

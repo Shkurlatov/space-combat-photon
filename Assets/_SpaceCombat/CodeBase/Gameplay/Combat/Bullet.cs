@@ -1,7 +1,7 @@
 ﻿using SpaceCombat.Gameplay.Ship;
 using UnityEngine;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Combat
 {
     public class Bullet : MonoBehaviour
     {

@@ -5,7 +5,11 @@ namespace SpaceCombat.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        GameObject SpawnCoin();
+        void SetScreenSize();
+        GameObject InstantiateCombatManager();
+        GameObject InstantiateSpaceShip();
+        GameObject InstantiateCoin();
+        GameObject InstantiateBullet();
         void Cleanup();
     }
 }

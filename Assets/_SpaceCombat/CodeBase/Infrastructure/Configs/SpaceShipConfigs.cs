@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace _SpaceCombat.CodeBase.Infrastructure.GameConfigs
+namespace SpaceCombat.Infrastructure.Configs
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/SpaceShipConfigs", fileName = "SpaceShipConfigs")]
-    public class SpaceShipConfigsSO : ScriptableObject
+    public class SpaceShipConfigs : ScriptableObject
     {
         [Range(20, 50)]
         public float RotationSpeed;

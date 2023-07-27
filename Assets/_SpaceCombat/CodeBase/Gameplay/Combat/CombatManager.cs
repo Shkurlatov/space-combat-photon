@@ -2,28 +2,19 @@
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using SpaceCombat.Gameplay.Ship;
+using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Input;
 using SpaceCombat.Utilities;
 using System.Collections;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Combat
 {
-    public class GameManager : MonoBehaviourPunCallbacks
+    public class CombatManager : MonoBehaviourPunCallbacks
     {
-        public static GameManager Instance = null;
-
-        public GameObject UIRootPrefab;
-
-        #region UNITY
-
-        public void Awake()
-        {
-            Instance = this;
-
-            Instantiate(UIRootPrefab);
-        }
+        private IGameFactory _gameFactory;
+        private CoinsHandler _coinsHandler;
 
         public override void OnEnable()
         {
@@ -32,7 +23,7 @@ namespace SpaceCombat.Gameplay
             CountdownTimer.OnCountdownTimerHasExpired += OnCountdownTimerIsExpired;
         }
 
-        public void Start()
+        public void Initialize(IGameFactory gameFactory, int coinsAmount)
         {
             Hashtable props = new Hashtable
             {
@@ -40,9 +31,11 @@ namespace SpaceCombat.Gameplay
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-            //IGameFactory gameFactory = new GameFactory();
+            _gameFactory = gameFactory;
+            _gameFactory.SetScreenSize();
 
-            //GetComponent<CoinsHandler>().Initialize(gameFactory, 7);
+            _coinsHandler = new CoinsHandler(_gameFactory);
+            _coinsHandler.SeedSpace(coinsAmount);
         }
 
         public override void OnDisable()
@@ -51,8 +44,6 @@ namespace SpaceCombat.Gameplay
 
             CountdownTimer.OnCountdownTimerHasExpired -= OnCountdownTimerIsExpired;
         }
-
-        #endregion
 
         #region COROUTINES
 
@@ -189,7 +180,7 @@ namespace SpaceCombat.Gameplay
 
             IInputService input = new MobileInputService();
 
-            GameObject spaceShip = PhotonNetwork.Instantiate("Game/Spaceship", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            GameObject spaceShip = PhotonNetwork.Instantiate("Combat/SpaceShip", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
             spaceShip.GetComponent<ShipMovement>().Initialize(input, screenSize);
             spaceShip.GetComponent<ShipMovement>().enabled = true;

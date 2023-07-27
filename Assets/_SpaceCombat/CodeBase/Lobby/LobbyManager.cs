@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace SpaceCombat.Lobby
 {
-    public class LobbyMainPanel : MonoBehaviourPunCallbacks
+    public class LobbyManager : MonoBehaviourPunCallbacks
     {
         private const string GAME = "Game";
 

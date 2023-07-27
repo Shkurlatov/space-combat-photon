@@ -55,7 +55,7 @@ namespace SpaceCombat.Lobby
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        FindObjectOfType<LobbyMainPanel>().LocalPlayerPropertiesUpdated();
+                        FindObjectOfType<LobbyManager>().LocalPlayerPropertiesUpdated();
                     }
                 });
             }

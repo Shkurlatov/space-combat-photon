@@ -3,7 +3,7 @@ using Photon.Pun.UtilityScripts;
 using System;
 using UnityEngine;
 
-namespace SpaceCombat.Gameplay
+namespace SpaceCombat.Gameplay.Combat
 {
     public class Coin : MonoBehaviour
     {

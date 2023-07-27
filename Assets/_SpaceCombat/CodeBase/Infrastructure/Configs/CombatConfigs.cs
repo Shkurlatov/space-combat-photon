@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace _SpaceCombat.CodeBase.Infrastructure.GameConfigs
+namespace SpaceCombat.Infrastructure.Configs
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/CombatConfigs", fileName = "CombatConfigs")]
-    public class CombatConfigsSO : ScriptableObject
+    public class CombatConfigs : ScriptableObject
     {
         [Range(4, 20)]
         public int CoinsAmount;

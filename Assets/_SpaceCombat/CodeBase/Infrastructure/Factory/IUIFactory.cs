@@ -5,8 +5,8 @@ namespace SpaceCombat.Infrastructure.Factory
 {
     public interface IUIFactory : IService
     {
-        GameObject CreateMainLobbyPanel();
-        void CreatePopup();
-        void CreateUIRoot();
+        GameObject InstantiateLobbyManager();
+        void InstantiateUIRoot();
+        void InstantiatePopup();
     }
 }

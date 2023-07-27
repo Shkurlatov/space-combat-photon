@@ -1,7 +1,7 @@
 ﻿using SpaceCombat.Infrastructure.Bootstrap;
 using SpaceCombat.Infrastructure.Factory;
 using SpaceCombat.Infrastructure.Services;
-using SpaceCombat.Infrastructure.GameConfigs;
+using SpaceCombat.Infrastructure.Configs;
 using System;
 using System.Collections.Generic;
 
