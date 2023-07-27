@@ -16,14 +16,14 @@ namespace SpaceCombat.Gameplay.Ship
         private float _force;
 
         private Rigidbody _rigidbody;
-        private ScreenSize _screenSize;
+        private SpaceSize _screenSize;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void Initialize(IInputService input, ScreenSize screenSize)
+        public void Initialize(IInputService input, SpaceSize screenSize)
         {
             _input = input;
             _screenSize = screenSize;

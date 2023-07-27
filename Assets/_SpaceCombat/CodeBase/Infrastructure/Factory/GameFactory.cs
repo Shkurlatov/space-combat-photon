@@ -11,7 +11,7 @@ namespace SpaceCombat.Infrastructure.Factory
         private readonly IAssetProvider _assetProvider;
         private readonly IDataProvider _dataProvider;
 
-        private ScreenSize _screenSize;
+        private SpaceSize _screenSize;
 
         public GameFactory(IAssetProvider assetProvider, IDataProvider dataProvider)
         {
@@ -21,7 +21,7 @@ namespace SpaceCombat.Infrastructure.Factory
 
         public void SetScreenSize()
         {
-            _screenSize = new ScreenSize(Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize);
+            _screenSize = new SpaceSize(Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize);
         }
 
         public GameObject InstantiateSpaceShip()
