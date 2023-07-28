@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace SpaceCombat.Lobby
 {
-    public class RoomListEntry : MonoBehaviour
+    public class RoomListEntity : MonoBehaviour
     {
         public Text RoomNameText;
         public Text RoomPlayersText;

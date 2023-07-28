@@ -33,7 +33,7 @@ namespace SpaceCombat.Gameplay.Hud
         {
             if (targetPlayer.ActorNumber == _actorNumber)
             {
-                int currentProtection = (int)targetPlayer.CustomProperties[AsteroidsGame.SHIP_PROTECTION];
+                int currentProtection = (int)targetPlayer.CustomProperties[GameConstants.SHIP_PROTECTION];
                 int collectedCoins = targetPlayer.GetScore();
 
                 _protectionImage.fillAmount = (float)currentProtection / MaxProtection;

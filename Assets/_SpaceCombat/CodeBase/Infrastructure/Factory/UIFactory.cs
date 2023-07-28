@@ -37,8 +37,8 @@ namespace SpaceCombat.Infrastructure.Factory
         public void InstantiatePopup(Player winner, Transform parent)
         {
             int collectedCoins = winner.GetScore();
-            Color textColor = AsteroidsGame.GetColor(winner.ActorNumber - 1);
-            string colorName = AsteroidsGame.GetColorName(winner.ActorNumber - 1);
+            Color textColor = GameConstants.GetColor(winner.ActorNumber - 1);
+            string colorName = GameConstants.GetColorName(winner.ActorNumber - 1);
             string popupText = $"Winner - {colorName} Player !\n\nCollected  {collectedCoins}  Coins";
 
             Popup popup = _assetProvider.Instantiate(AssetPath.POPUP_PATH, parent).GetComponent<Popup>();

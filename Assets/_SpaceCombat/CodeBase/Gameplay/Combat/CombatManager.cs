@@ -43,7 +43,7 @@ namespace SpaceCombat.Gameplay.Combat
 
             Hashtable props = new Hashtable
             {
-                {AsteroidsGame.PLAYER_LOADED_LEVEL, true}
+                {GameConstants.PLAYER_LOADED_LEVEL, true}
             };
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
@@ -59,7 +59,7 @@ namespace SpaceCombat.Gameplay.Combat
             int startTimestamp;
             bool startTimeIsSet = CountdownTimer.TryGetStartTime(out startTimestamp);
 
-            if (changedProps.ContainsKey(AsteroidsGame.PLAYER_LOADED_LEVEL))
+            if (changedProps.ContainsKey(GameConstants.PLAYER_LOADED_LEVEL))
             {
                 if (CheckAllPlayerLoadedLevel())
                 {
@@ -87,7 +87,7 @@ namespace SpaceCombat.Gameplay.Combat
             {
                 object playerLoadedLevel;
 
-                if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LOADED_LEVEL, out playerLoadedLevel))
+                if (p.CustomProperties.TryGetValue(GameConstants.PLAYER_LOADED_LEVEL, out playerLoadedLevel))
                 {
                     if ((bool)playerLoadedLevel)
                     {
