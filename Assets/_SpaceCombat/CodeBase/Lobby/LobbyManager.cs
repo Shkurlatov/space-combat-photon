@@ -48,6 +48,21 @@ namespace SpaceCombat.Lobby
 
 
 
+        public void OnCreateRoomButtonClicked()
+        {
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+
+                return;
+            }
+
+            if (!IsCreateInputFieldEmpty())
+            {
+                CreateRoom();
+            }
+        }
+
         public void OnJoinRoomButtonClicked()
         {
             if (!PhotonNetwork.InLobby)
@@ -63,6 +78,11 @@ namespace SpaceCombat.Lobby
             }
         }
 
+        private bool IsCreateInputFieldEmpty()
+        {
+            return CreateRoomNameInputField.text == string.Empty;
+        }
+        
         private bool IsJoinInputFieldEmpty()
         {
             return JoinRoomNameInputField.text == string.Empty;
@@ -81,7 +101,7 @@ namespace SpaceCombat.Lobby
 
         private void Start()
         {
-            OnLoginButtonClicked();
+            LaunchConnection();
         }
 
 
@@ -96,9 +116,7 @@ namespace SpaceCombat.Lobby
                 PhotonNetwork.JoinLobby();
             }
 
-            Debug.Log("Ready !");
-
-            //this.SetActivePanel(CreateRoomPanel.name);
+            CreateRoomPanel.SetActive(true);
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -114,11 +132,11 @@ namespace SpaceCombat.Lobby
         public override void OnJoinedLobby()
         {
             RoomListPanel.SetActive(true);
-            Debug.LogWarning("OnJoinedLobby");
-            // whenever this joins a new lobby, clear any previous room lists
+            CreateRoomPanel.SetActive(true);
+            InsideRoomPanel.SetActive(false);
+
             cachedRoomList.Clear();
             ClearRoomListView();
-
         }
 
         // note: when a client joins / creates a room, OnLeftLobby does not get called, even if the client was in a lobby before
@@ -152,12 +170,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnJoinedRoom()
         {
-            Debug.LogWarning("OnJoinedRoom");
-            // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
             cachedRoomList.Clear();
-
-
-            //SetActivePanel(InsideRoomPanel.name);
 
             if (playerListEntries == null)
             {
@@ -187,6 +200,8 @@ namespace SpaceCombat.Lobby
                 {GameConstants.PLAYER_LOADED_LEVEL, false}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            InsideRoomPanel.SetActive(true);
         }
 
         public override void OnLeftRoom()
@@ -267,11 +282,9 @@ namespace SpaceCombat.Lobby
             //SetActivePanel(SelectionPanel.name);
         }
 
-        public void OnCreateRoomButtonClicked()
+        public void CreateRoom()
         {
-            Debug.Log("OnCreateRoomButtonClicked");
             string roomName = CreateRoomNameInputField.text;
-            roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
             byte maxPlayers = 4;
             //byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
@@ -280,6 +293,8 @@ namespace SpaceCombat.Lobby
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
 
             PhotonNetwork.CreateRoom(roomName, options, null);
+
+            CreateRoomPanel.SetActive(false);
         }
 
         public void OnJoinRandomRoomButtonClicked()
@@ -294,7 +309,7 @@ namespace SpaceCombat.Lobby
             PhotonNetwork.LeaveRoom();
         }
 
-        public void OnLoginButtonClicked()
+        public void LaunchConnection()
         {
             Debug.Log("OnLoginButtonClicked");
             string playerName = PlayerName;
