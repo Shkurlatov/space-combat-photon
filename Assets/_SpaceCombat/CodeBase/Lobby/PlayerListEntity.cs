@@ -8,7 +8,7 @@ using SpaceCombat.Utilities;
 
 namespace SpaceCombat.Lobby
 {
-    public class PlayerList : MonoBehaviour
+    public class PlayerListEntity : MonoBehaviour
     {
         [Header("UI References")]
         public Text PlayerNameText;
