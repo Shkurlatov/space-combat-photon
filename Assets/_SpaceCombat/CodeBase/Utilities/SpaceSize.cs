@@ -1,8 +1,8 @@
 ﻿namespace SpaceCombat.Utilities
 {
-    public struct ScreenSize
+    public struct SpaceSize
     {
-        public ScreenSize(float halfWidth, float halfHeight)
+        public SpaceSize(float halfWidth, float halfHeight)
         {
             HalfWidth = halfWidth;
             HalfHeight = halfHeight;

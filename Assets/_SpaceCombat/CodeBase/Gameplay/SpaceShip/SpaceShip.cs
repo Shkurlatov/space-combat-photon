@@ -7,11 +7,8 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class SpaceShip : MonoBehaviour
     {
-        public float RotationSpeed = 30.0f;
-        public float MovementSpeed = 20.0f;
-
-        public ParticleSystem Destruction;
-        public GameObject EngineTrail;
+        [SerializeField] private ParticleSystem _destruction;
+        [SerializeField] private GameObject _engineTrail;
 
         private PhotonView _photonView;
         private Collider _collider;
@@ -38,8 +35,8 @@ namespace SpaceCombat.Gameplay.Ship
             _collider.enabled = false;
             _renderer.enabled = false;
 
-            EngineTrail.SetActive(false);
-            Destruction.Play();
+            _engineTrail.SetActive(false);
+            _destruction.Play();
         }
     }
 }

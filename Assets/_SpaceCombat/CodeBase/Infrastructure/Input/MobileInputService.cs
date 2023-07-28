@@ -10,10 +10,14 @@ namespace SpaceCombat.Infrastructure.Input
 
         public Vector2 Axis => InputAxis();
 
-        public bool IsAttackButtonUp() =>
-            SimpleInput.GetButtonUp(Fire);
+        public bool IsAttackButtonUp()
+        {
+            return SimpleInput.GetButtonUp(Fire);
+        }
 
-        private Vector2 InputAxis() =>
-            new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
+        private Vector2 InputAxis()
+        {
+            return new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
+        }
     }
 }

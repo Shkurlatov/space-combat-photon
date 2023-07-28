@@ -7,7 +7,7 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipProtection : MonoBehaviour
     {
-        public int Points = 10; 
+        public int Points = 1; 
 
         private PhotonView _photonView;
 

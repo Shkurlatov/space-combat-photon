@@ -6,9 +6,8 @@ namespace SpaceCombat.Infrastructure.Factory
     public interface IGameFactory : IService
     {
         void SetScreenSize();
-        GameObject InstantiateSpaceShip();
+        void InstantiateSpaceShip(int playerCount, int playerNumber);
         GameObject InstantiateCoin();
-        GameObject InstantiateBullet();
         void Cleanup();
     }
 }

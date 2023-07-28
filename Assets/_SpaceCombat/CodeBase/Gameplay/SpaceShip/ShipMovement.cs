@@ -9,30 +9,34 @@ namespace SpaceCombat.Gameplay.Ship
         private const float INPUT_SENSITIVITY = 0.001f;
         private const float FORCE_MULTIPLIER = 1000.0f;
 
-        public float RotationSpeed = 28.0f;
-        public float MovementSpeed = 12.0f;
+        private Rigidbody _rigidbody;
 
         private IInputService _input;
-        private float _force;
+        private SpaceSize _spaceSize;
+        private float _rotationSpeed;
+        private float _movementSpeed;
 
-        private Rigidbody _rigidbody;
-        private ScreenSize _screenSize;
+        private float _force;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void Initialize(IInputService input, ScreenSize screenSize)
+        public void Initialize(IInputService input, SpaceSize screenSize, float rotationSpeed, float movementSpeed)
         {
             _input = input;
-            _screenSize = screenSize;
+            _spaceSize = screenSize;
+            _rotationSpeed = rotationSpeed;
+            _movementSpeed = movementSpeed;
         }
 
         private void Update()
         {
             if (_input.Axis.sqrMagnitude > INPUT_SENSITIVITY)
+            {
                 _force = _input.Axis.sqrMagnitude * FORCE_MULTIPLIER;
+            }
         }
 
         public void FixedUpdate()
@@ -41,23 +45,29 @@ namespace SpaceCombat.Gameplay.Ship
 
             if (direction != Vector3.zero)
             {
-                Vector3 force = _force * MovementSpeed * Time.fixedDeltaTime * direction.normalized;
+                Vector3 force = _force * _movementSpeed * Time.fixedDeltaTime * direction.normalized;
                 _rigidbody.AddForce(force);
             }
 
             if (_rigidbody.velocity != Vector3.zero)
-                transform.forward = Vector3.Slerp(transform.forward, _rigidbody.velocity, RotationSpeed * Time.fixedDeltaTime);
+            {
+                transform.forward = Vector3.Slerp(transform.forward, _rigidbody.velocity, _rotationSpeed * Time.fixedDeltaTime);
+            }
 
             CheckExitScreen();
         }
 
         private void CheckExitScreen()
         {
-            if (Mathf.Abs(_rigidbody.position.x) > _screenSize.HalfWidth)
-                _rigidbody.position = new Vector3(Mathf.Sign(_rigidbody.position.x) * _screenSize.HalfWidth, 0, _rigidbody.position.z);
+            if (Mathf.Abs(_rigidbody.position.x) > _spaceSize.HalfWidth)
+            {
+                _rigidbody.position = new Vector3(Mathf.Sign(_rigidbody.position.x) * _spaceSize.HalfWidth, 0, _rigidbody.position.z);
+            }
 
-            if (Mathf.Abs(_rigidbody.position.z) > _screenSize.HalfHeight)
-                _rigidbody.position = new Vector3(_rigidbody.position.x, 0, Mathf.Sign(_rigidbody.position.z) * _screenSize.HalfHeight);
+            if (Mathf.Abs(_rigidbody.position.z) > _spaceSize.HalfHeight)
+            {
+                _rigidbody.position = new Vector3(_rigidbody.position.x, 0, Mathf.Sign(_rigidbody.position.z) * _spaceSize.HalfHeight);
+            }
         }
     }
 }

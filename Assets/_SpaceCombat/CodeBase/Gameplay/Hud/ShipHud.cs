@@ -10,7 +10,7 @@ namespace SpaceCombat.Gameplay.Hud
 {
     public class ShipHud : MonoBehaviourPunCallbacks
     {
-        public int MaxProtection = 10;
+        public int MaxProtection = 1;
 
         [SerializeField] private Image _protectionImage;
         [SerializeField] private Text _coinsCounterText;
