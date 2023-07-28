@@ -13,15 +13,19 @@ The repository contains an implementation of the Test task.
 ## Project Requirements
 
 * Scenes
+
     * The game must have 3 scenes: Loading, Lobby, Game
 <br/><br/>
-* Technology stack description:
+* Technology stack description
+
     * To complete the task, you can use any free network engine and cloud service to create scalable cross-platform multiplayer games
 <br/><br/>
 * Lobby
+
     * The lobby should be able to create a room and enter it, as well as connect to a room already created by another player. Lobby scene contains two fields with buttons, in one field the player can write the name of the room, and then click the “Create” button, in the other field the player writes the name of the created room, presses the “Enter” button and waits for another player to enter on another device to a room with the same name
 <br/><br/>
 * Gameplay
+
     * After entering the room, players enter the battle server and the game process begins. There is a field, limited by the size of the screen, scattered with lootable coins that each player can collect
 
     * When at least 2 players appear on the playing field, each of them has the ability to turn and move in a certain direction, as well as shoot in the direction where it looks. Virtual joystick control is used to control the player
