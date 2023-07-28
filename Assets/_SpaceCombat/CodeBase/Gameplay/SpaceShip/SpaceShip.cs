@@ -25,7 +25,7 @@ namespace SpaceCombat.Gameplay.Ship
         {
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
-                renderer.material.color = AsteroidsGame.GetColor(_photonView.Owner.GetPlayerNumber());
+                renderer.material.color = GameConstants.GetColor(_photonView.Owner.GetPlayerNumber());
             }
         }
 

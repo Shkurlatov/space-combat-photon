@@ -42,6 +42,7 @@ namespace SpaceCombat.Infrastructure.Factory
             GameObject spaceShip = _assetProvider.InstantiateGlobal(AssetPath.SPACE_SHIP_PATH, position, rotation);
 
             spaceShip.GetComponent<ShipProtection>().Points = shipConfigs.ProtectionPoints;
+            spaceShip.GetComponent<ShipProtection>().Initialize();
 
             spaceShip.GetComponentInChildren<ShipHud>().MaxProtection = shipConfigs.ProtectionPoints;
 

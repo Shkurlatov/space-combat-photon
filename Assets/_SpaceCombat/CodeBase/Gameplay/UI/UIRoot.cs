@@ -45,7 +45,7 @@ namespace SpaceCombat.Gameplay.UI
                 return;
             }
 
-            int shipProtection = (int)targetPlayer.CustomProperties[AsteroidsGame.SHIP_PROTECTION];
+            int shipProtection = (int)targetPlayer.CustomProperties[GameConstants.SHIP_PROTECTION];
 
             if (shipProtection <= 0)
             {
@@ -65,7 +65,7 @@ namespace SpaceCombat.Gameplay.UI
 
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                int shipProtection = (int)player.CustomProperties[AsteroidsGame.SHIP_PROTECTION];
+                int shipProtection = (int)player.CustomProperties[GameConstants.SHIP_PROTECTION];
 
                 if (shipProtection > 0)
                 {

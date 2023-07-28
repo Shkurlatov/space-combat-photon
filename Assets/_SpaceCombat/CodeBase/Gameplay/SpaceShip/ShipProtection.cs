@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using SpaceCombat.Utilities;
+using System;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -7,7 +8,7 @@ namespace SpaceCombat.Gameplay.Ship
 {
     public class ShipProtection : MonoBehaviour
     {
-        public int Points = 1; 
+        public int Points = 1;
 
         private PhotonView _photonView;
 
@@ -16,6 +17,11 @@ namespace SpaceCombat.Gameplay.Ship
         private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
+        }
+
+        public void Initialize()
+        {
+            UpdateShipProtectionProperty();
         }
 
         public void TakeDamage()
@@ -41,9 +47,9 @@ namespace SpaceCombat.Gameplay.Ship
         private void UpdateShipProtectionProperty()
         {
             _photonView.Owner.SetCustomProperties(
-                new Hashtable 
-                { 
-                    { AsteroidsGame.SHIP_PROTECTION, Points } 
+                new Hashtable
+                {
+                    { GameConstants.SHIP_PROTECTION, Points }
                 });
         }
 

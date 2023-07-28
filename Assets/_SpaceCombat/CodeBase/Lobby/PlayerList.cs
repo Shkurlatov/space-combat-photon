@@ -8,7 +8,7 @@ using SpaceCombat.Utilities;
 
 namespace SpaceCombat.Lobby
 {
-    public class PlayerListEntry : MonoBehaviour
+    public class PlayerList : MonoBehaviour
     {
         [Header("UI References")]
         public Text PlayerNameText;
@@ -19,8 +19,6 @@ namespace SpaceCombat.Lobby
 
         private int ownerId;
         private bool isPlayerReady;
-
-        #region UNITY
 
         public void OnEnable()
         {
@@ -37,9 +35,9 @@ namespace SpaceCombat.Lobby
             {
                 Hashtable initialProps = new Hashtable() 
                 {
-                    {AsteroidsGame.PLAYER_READY, isPlayerReady}, 
-                    {AsteroidsGame.SHIP_PROTECTION, AsteroidsGame.SHIP_MAX_PROTECTION},
-                    {AsteroidsGame.WINNER_NUMBER, 0}
+                    {GameConstants.PLAYER_READY, isPlayerReady},
+                    {GameConstants.SHIP_PROTECTION, 1},
+                    {GameConstants.WINNER_NUMBER, 0}
                 };
 
                 PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
@@ -50,7 +48,7 @@ namespace SpaceCombat.Lobby
                     isPlayerReady = !isPlayerReady;
                     SetPlayerReady(isPlayerReady);
 
-                    Hashtable props = new Hashtable() {{AsteroidsGame.PLAYER_READY, isPlayerReady}};
+                    Hashtable props = new Hashtable() {{GameConstants.PLAYER_READY, isPlayerReady}};
                     PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
                     if (PhotonNetwork.IsMasterClient)
@@ -66,8 +64,6 @@ namespace SpaceCombat.Lobby
             PlayerNumbering.OnPlayerNumberingChanged -= OnPlayerNumberingChanged;
         }
 
-        #endregion
-
         public void Initialize(int playerId, string playerName)
         {
             ownerId = playerId;
@@ -80,7 +76,7 @@ namespace SpaceCombat.Lobby
             {
                 if (p.ActorNumber == ownerId)
                 {
-                    PlayerColorImage.color = AsteroidsGame.GetColor(p.GetPlayerNumber());
+                    PlayerColorImage.color = GameConstants.GetColor(p.GetPlayerNumber());
                 }
             }
         }

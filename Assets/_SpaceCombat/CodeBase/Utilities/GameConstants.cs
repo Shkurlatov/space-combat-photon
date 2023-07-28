@@ -2,15 +2,8 @@
 
 namespace SpaceCombat.Utilities
 {
-    public class AsteroidsGame
+    public class GameConstants
     {
-        public const float ASTEROIDS_MIN_SPAWN_TIME = 5.0f;
-        public const float ASTEROIDS_MAX_SPAWN_TIME = 10.0f;
-
-        public const float PLAYER_RESPAWN_TIME = 4.0f;
-
-        public const int SHIP_MAX_PROTECTION = 10;
-
         public const string PLAYER_READY = "IsPlayerReady";
         public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
         public const string SHIP_PROTECTION = "PlayerHealthPoints";
