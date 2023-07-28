@@ -386,7 +386,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Rooms
+  m_Text: Room name
 --- !u!1 &898864524
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +776,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Players
+  m_Text: Players in room
 --- !u!1 &8639067164796746688
 GameObject:
   m_ObjectHideFlags: 0

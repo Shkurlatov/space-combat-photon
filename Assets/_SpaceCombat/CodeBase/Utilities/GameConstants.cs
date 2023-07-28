@@ -9,6 +9,8 @@ namespace SpaceCombat.Utilities
         public const string SHIP_PROTECTION = "PlayerHealthPoints";
         public const string WINNER_NUMBER = "WinPlayerNumber";
 
+        public const int MAX_PLAYERS_AMOUNT = 4;
+
         public static Color GetColor(int colorChoice)
         {
             switch (colorChoice)

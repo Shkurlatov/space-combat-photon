@@ -286,8 +286,7 @@ namespace SpaceCombat.Lobby
         {
             string roomName = CreateRoomNameInputField.text;
 
-            byte maxPlayers = 4;
-            //byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
+            byte maxPlayers = GameConstants.MAX_PLAYERS_AMOUNT;
             maxPlayers = (byte) Mathf.Clamp(maxPlayers, 2, 8);
 
             RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000 };
