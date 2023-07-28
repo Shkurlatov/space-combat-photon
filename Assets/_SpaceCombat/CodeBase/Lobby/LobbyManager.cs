@@ -1,7 +1,6 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using SpaceCombat.Infrastructure.States;
 using SpaceCombat.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace SpaceCombat.Lobby
         [Header("Login Panel")]
         public GameObject LoginPanel;
 
-        public InputField PlayerNameInput;
+        public string PlayerName;
 
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
@@ -77,7 +76,7 @@ namespace SpaceCombat.Lobby
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomList = new Dictionary<string, GameObject>();
             
-            PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
+            PlayerName = "Player " + Random.Range(1000, 10000);
         }
 
         private void Start()
@@ -99,7 +98,7 @@ namespace SpaceCombat.Lobby
 
             Debug.Log("Ready !");
 
-            this.SetActivePanel(CreateRoomPanel.name);
+            //this.SetActivePanel(CreateRoomPanel.name);
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -133,7 +132,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
-            SetActivePanel(SelectionPanel.name);
+            //SetActivePanel(SelectionPanel.name);
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
@@ -158,7 +157,7 @@ namespace SpaceCombat.Lobby
             cachedRoomList.Clear();
 
 
-            SetActivePanel(InsideRoomPanel.name);
+            //SetActivePanel(InsideRoomPanel.name);
 
             if (playerListEntries == null)
             {
@@ -192,7 +191,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnLeftRoom()
         {
-            SetActivePanel(SelectionPanel.name);
+            //SetActivePanel(SelectionPanel.name);
 
             foreach (GameObject entry in playerListEntries.Values)
             {
@@ -265,7 +264,7 @@ namespace SpaceCombat.Lobby
                 PhotonNetwork.LeaveLobby();
             }
 
-            SetActivePanel(SelectionPanel.name);
+            //SetActivePanel(SelectionPanel.name);
         }
 
         public void OnCreateRoomButtonClicked()
@@ -285,7 +284,7 @@ namespace SpaceCombat.Lobby
 
         public void OnJoinRandomRoomButtonClicked()
         {
-            SetActivePanel(JoinRandomRoomPanel.name);
+            //SetActivePanel(JoinRandomRoomPanel.name);
 
             PhotonNetwork.JoinRandomRoom();
         }
@@ -298,7 +297,7 @@ namespace SpaceCombat.Lobby
         public void OnLoginButtonClicked()
         {
             Debug.Log("OnLoginButtonClicked");
-            string playerName = PlayerNameInput.text;
+            string playerName = PlayerName;
 
             if (!playerName.Equals(""))
             {
@@ -319,7 +318,7 @@ namespace SpaceCombat.Lobby
                 PhotonNetwork.JoinLobby();
             }
 
-            SetActivePanel(RoomListPanel.name);
+            //SetActivePanel(RoomListPanel.name);
         }
 
         public void OnStartGameButtonClicked()
@@ -374,14 +373,12 @@ namespace SpaceCombat.Lobby
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
 
-        private void SetActivePanel(string activePanel)
-        {
-            LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-            SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-            CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
-            JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
-            InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
-        }
+        //private void SetActivePanel(string activePanel)
+        //{
+        //    CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
+        //    JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
+        //    InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+        //}
 
         private void UpdateCachedRoomList(List<RoomInfo> roomList)
         {
