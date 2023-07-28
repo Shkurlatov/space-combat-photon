@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 using SpaceCombat.Gameplay.Combat;
-using SpaceCombat.Infrastructure.Factory;
+using SpaceCombat.Infrastructure.GameResources;
 using SpaceCombat.Infrastructure.Input;
 using UnityEngine;
 
@@ -11,24 +11,22 @@ namespace SpaceCombat.Gameplay.Ship
         private const string JUMP = "Jump";
         private const string FIRE = "Fire";
 
-        public GameObject BulletPrefab; 
-        
         private PhotonView _photonView;
 
-        private IGameFactory _gameFactory;
         private IInputService _input;
         private float _reloadTime;
+        private string _bulletPath;
 
         private float _shootingTimer;
 
         private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
+            _bulletPath = AssetPath.BULLET_PATH;
         }
 
-        public void Initialize(IGameFactory gameFactory, IInputService input, float reloadTime)
+        public void Initialize(IInputService input, float reloadTime)
         {
-            _gameFactory = gameFactory;
             _input = input;
             _reloadTime = reloadTime;
         }
@@ -53,12 +51,16 @@ namespace SpaceCombat.Gameplay.Ship
         {
             float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
 
-            GameObject bullet = Instantiate(BulletPrefab, position, rotation);
-            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward), Mathf.Abs(lag));
-            bullet = Instantiate(BulletPrefab, position, rotation);
-            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward + Vector3.right * 0.1f), Mathf.Abs(lag));
-            bullet = Instantiate(BulletPrefab, position, rotation);
-            bullet.GetComponent<Bullet>().InitializeBullet(rotation * (Vector3.forward + Vector3.left * 0.1f), Mathf.Abs(lag));
+            // Bullet factory need to be implemented
+
+            GameObject bullet = Instantiate(Resources.Load<GameObject>(_bulletPath), position, rotation);
+            bullet.GetComponent<Bullet>().Initialize(rotation * (Vector3.forward), Mathf.Abs(lag));
+
+            bullet = Instantiate(Resources.Load<GameObject>(_bulletPath), position, rotation);
+            bullet.GetComponent<Bullet>().Initialize(rotation * (Vector3.forward + Vector3.right * 0.1f), Mathf.Abs(lag));
+
+            bullet = Instantiate(Resources.Load<GameObject>(_bulletPath), position, rotation);
+            bullet.GetComponent<Bullet>().Initialize(rotation * (Vector3.forward + Vector3.left * 0.1f), Mathf.Abs(lag));
         }
     }
 }

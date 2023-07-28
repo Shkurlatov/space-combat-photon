@@ -1,5 +1,4 @@
-﻿using SpaceCombat.Gameplay.Combat;
-using SpaceCombat.Gameplay.Hud;
+﻿using SpaceCombat.Gameplay.Hud;
 using SpaceCombat.Gameplay.Ship;
 using SpaceCombat.Infrastructure.Configs;
 using SpaceCombat.Infrastructure.GameResources;
@@ -42,15 +41,14 @@ namespace SpaceCombat.Infrastructure.Factory
 
             GameObject spaceShip = _assetProvider.InstantiateGlobal(AssetPath.SPACE_SHIP_PATH, position, rotation);
 
-            //spaceShip.GetComponent<ShipProtection>().Initialize(shipConfigs.ProtectionPoints);
+            spaceShip.GetComponent<ShipProtection>().Points = shipConfigs.ProtectionPoints;
 
-            //spaceShip.GetComponent<ShipHud>().Initialize(shipConfigs.ProtectionPoints);
-            //spaceShip.GetComponent<ShipHud>().enabled = true;
+            spaceShip.GetComponentInChildren<ShipHud>().MaxProtection = shipConfigs.ProtectionPoints;
 
             spaceShip.GetComponent<ShipMovement>().Initialize(_input, _screenSize, shipConfigs.RotationSpeed, shipConfigs.MovementSpeed);
             spaceShip.GetComponent<ShipMovement>().enabled = true;
 
-            spaceShip.GetComponent<ShipAttack>().Initialize(this, _input, shipConfigs.ReloadTime);
+            spaceShip.GetComponent<ShipAttack>().Initialize(_input, shipConfigs.ReloadTime);
             spaceShip.GetComponent<ShipAttack>().enabled = true;
         }
 
@@ -60,23 +58,6 @@ namespace SpaceCombat.Infrastructure.Factory
             float positionZ = Random.Range(-_screenSize.HalfHeight, _screenSize.HalfHeight);
 
             return _assetProvider.InstantiateGlobal(AssetPath.COIN_PATH, new Vector3(positionX, 0, positionZ));
-        }
-
-        public void InstantiateBullets(Vector3 position, Quaternion rotation, float lag)
-        {
-            CombatConfigs combatConfigs = _dataProvider.GetCombatConfigs();
-
-            GameObject bullet1 = _assetProvider.Instantiate(AssetPath.BULLET_PATH, position, rotation);
-            bullet1.GetComponent<Bullet>().Initialize(
-                rotation * (Vector3.forward), combatConfigs.BulletSpeed, Mathf.Abs(lag), combatConfigs.BulletDestroyTime);
-
-            GameObject bullet2 = _assetProvider.Instantiate(AssetPath.BULLET_PATH, position, rotation);
-            bullet2.GetComponent<Bullet>().Initialize(
-                rotation * (Vector3.forward + Vector3.right * 0.1f), combatConfigs.BulletSpeed, Mathf.Abs(lag), combatConfigs.BulletDestroyTime);
-
-            GameObject bullet3 = _assetProvider.Instantiate(AssetPath.BULLET_PATH, position, rotation);
-            bullet3.GetComponent<Bullet>().Initialize(
-                rotation * (Vector3.forward + Vector3.left * 0.1f), combatConfigs.BulletSpeed, Mathf.Abs(lag), combatConfigs.BulletDestroyTime);
         }
 
         public void Cleanup()

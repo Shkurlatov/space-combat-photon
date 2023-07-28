@@ -8,7 +8,6 @@ namespace SpaceCombat.Infrastructure.Factory
         void SetScreenSize();
         void InstantiateSpaceShip(int playerCount, int playerNumber);
         GameObject InstantiateCoin();
-        void InstantiateBullets(Vector3 position, Quaternion rotation, float lag);
         void Cleanup();
     }
 }

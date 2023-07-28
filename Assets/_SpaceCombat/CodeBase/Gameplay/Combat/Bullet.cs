@@ -15,18 +15,7 @@ namespace SpaceCombat.Gameplay.Combat
             Destroy(gameObject, DestroyTime);
         }
 
-        public void Initialize(Vector3 originalDirection, float speed, float lag, float destroyTime)
-        {
-            transform.forward = originalDirection;
-
-            Rigidbody rigidbody = GetComponent<Rigidbody>();
-            rigidbody.velocity = originalDirection * speed;
-            rigidbody.position += rigidbody.velocity * lag;
-
-            Destroy(gameObject, destroyTime);
-        }
-
-        public void InitializeBullet(Vector3 originalDirection, float lag)
+        public void Initialize(Vector3 originalDirection, float lag)
         {
             transform.forward = originalDirection;
 
