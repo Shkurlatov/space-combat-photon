@@ -67,7 +67,9 @@ namespace SpaceCombat.Lobby
         public void Initialize(int playerId, string playerName)
         {
             ownerId = playerId;
-            PlayerNameText.text = playerName;
+
+            string colorName = GameConstants.GetColorName(playerId - 1);
+            PlayerNameText.text = colorName + " Player";
         }
 
         private void OnPlayerNumberingChanged()
