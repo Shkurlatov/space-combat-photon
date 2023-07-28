@@ -58,17 +58,25 @@ namespace SpaceCombat.Lobby
             PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
         }
 
+        private void Start()
+        {
+            OnLoginButtonClicked();
+        }
+
         #endregion
 
         #region PUN CALLBACKS
 
         public override void OnConnectedToMaster()
         {
+            Debug.LogWarning("OnConnectedToMaster");
             this.SetActivePanel(SelectionPanel.name);
+            //OnLoginButtonClicked();
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
+            Debug.LogWarning("OnRoomListUpdate");
             ClearRoomListView();
 
             UpdateCachedRoomList(roomList);
@@ -77,6 +85,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnJoinedLobby()
         {
+            Debug.LogWarning("OnJoinedLobby");
             // whenever this joins a new lobby, clear any previous room lists
             cachedRoomList.Clear();
             ClearRoomListView();
@@ -110,6 +119,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnJoinedRoom()
         {
+            Debug.LogWarning("OnJoinedRoom");
             // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
             cachedRoomList.Clear();
 
@@ -161,6 +171,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
+            Debug.LogWarning("OnPlayerEnteredRoom");
             GameObject entry = Instantiate(PlayerListEntryPrefab);
             entry.transform.SetParent(InsideRoomPanel.transform);
             entry.transform.localScale = Vector3.one;
@@ -181,6 +192,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
+            Debug.LogWarning("OnMasterClientSwitched");
             if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
             {
                 StartGameButton.gameObject.SetActive(CheckPlayersReady());
@@ -189,6 +201,7 @@ namespace SpaceCombat.Lobby
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
+            Debug.LogWarning("OnPlayerPropertiesUpdate");
             if (playerListEntries == null)
             {
                 playerListEntries = new Dictionary<int, GameObject>();
@@ -223,6 +236,7 @@ namespace SpaceCombat.Lobby
 
         public void OnCreateRoomButtonClicked()
         {
+            Debug.Log("OnCreateRoomButtonClicked");
             string roomName = RoomNameInputField.text;
             roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
@@ -249,6 +263,7 @@ namespace SpaceCombat.Lobby
 
         public void OnLoginButtonClicked()
         {
+            Debug.Log("OnLoginButtonClicked");
             string playerName = PlayerNameInput.text;
 
             if (!playerName.Equals(""))
@@ -264,6 +279,7 @@ namespace SpaceCombat.Lobby
 
         public void OnRoomListButtonClicked()
         {
+            Debug.Log("OnRoomListButtonClicked");
             if (!PhotonNetwork.InLobby)
             {
                 PhotonNetwork.JoinLobby();
@@ -274,6 +290,7 @@ namespace SpaceCombat.Lobby
 
         public void OnStartGameButtonClicked()
         {
+            Debug.Log("OnStartGameButtonClicked");
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
