@@ -12,13 +12,7 @@ namespace SpaceCombat.Lobby
     {
         private const string GAME = "Game";
 
-        [Header("Login Panel")]
-        public GameObject LoginPanel;
-
         public string PlayerName;
-
-        [Header("Selection Panel")]
-        public GameObject SelectionPanel;
 
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
@@ -26,68 +20,21 @@ namespace SpaceCombat.Lobby
         public InputField CreateRoomNameInputField;
         public InputField JoinRoomNameInputField;
 
-        [Header("Join Random Room Panel")]
-        public GameObject JoinRandomRoomPanel;
-
         [Header("Room List Panel")]
         public GameObject RoomListPanel;
 
         public GameObject RoomListContent;
-        public GameObject RoomListEntryPrefab;
+        public GameObject RoomListEntityPrefab;
 
         [Header("Inside Room Panel")]
         public GameObject InsideRoomPanel;
 
         public Button StartGameButton;
-        public GameObject PlayerListEntryPrefab;
+        public GameObject PlayerListEntityPrefab;
 
         private Dictionary<string, RoomInfo> cachedRoomList;
         private Dictionary<string, GameObject> roomList;
-        private Dictionary<int, GameObject> playerListEntries;
-
-
-
-
-        public void OnCreateRoomButtonClicked()
-        {
-            if (!PhotonNetwork.InLobby)
-            {
-                PhotonNetwork.JoinLobby();
-
-                return;
-            }
-
-            if (!IsCreateInputFieldEmpty())
-            {
-                CreateRoom();
-            }
-        }
-
-        public void OnJoinRoomButtonClicked()
-        {
-            if (!PhotonNetwork.InLobby)
-            {
-                PhotonNetwork.JoinLobby();
-
-                return;
-            }
-
-            if(!IsJoinInputFieldEmpty())
-            {
-                PhotonNetwork.JoinRoom(JoinRoomNameInputField.text);
-            }
-        }
-
-        private bool IsCreateInputFieldEmpty()
-        {
-            return CreateRoomNameInputField.text == string.Empty;
-        }
-        
-        private bool IsJoinInputFieldEmpty()
-        {
-            return JoinRoomNameInputField.text == string.Empty;
-        }
-
+        private Dictionary<int, GameObject> playerListEntities;
 
         public void Awake()
         {
@@ -104,15 +51,12 @@ namespace SpaceCombat.Lobby
             LaunchConnection();
         }
 
-
         #region PUN CALLBACKS
 
         public override void OnConnectedToMaster()
         {
             if (!PhotonNetwork.InLobby)
             {
-                Debug.Log("Not InLobby !");
-
                 PhotonNetwork.JoinLobby();
             }
 
@@ -121,8 +65,6 @@ namespace SpaceCombat.Lobby
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            Debug.LogWarning("OnRoomListUpdate");
-
             ClearRoomListView();
 
             UpdateCachedRoomList(roomList);
@@ -139,7 +81,6 @@ namespace SpaceCombat.Lobby
             ClearRoomListView();
         }
 
-        // note: when a client joins / creates a room, OnLeftLobby does not get called, even if the client was in a lobby before
         public override void OnLeftLobby()
         {
             RoomListPanel.SetActive(true);
@@ -150,47 +91,42 @@ namespace SpaceCombat.Lobby
 
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
-            //SetActivePanel(SelectionPanel.name);
+
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.LogWarning("OnJoinRoomFailed");
 
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            string roomName = "Room " + Random.Range(1000, 10000);
 
-            RoomOptions options = new RoomOptions {MaxPlayers = 8};
-
-            PhotonNetwork.CreateRoom(roomName, options, null);
         }
 
         public override void OnJoinedRoom()
         {
             cachedRoomList.Clear();
 
-            if (playerListEntries == null)
+            if (playerListEntities == null)
             {
-                playerListEntries = new Dictionary<int, GameObject>();
+                playerListEntities = new Dictionary<int, GameObject>();
             }
 
             foreach (Player p in PhotonNetwork.PlayerList)
             {
-                GameObject entry = Instantiate(PlayerListEntryPrefab);
-                entry.transform.SetParent(InsideRoomPanel.transform);
-                entry.transform.localScale = Vector3.one;
-                entry.GetComponent<PlayerListEntity>().Initialize(p.ActorNumber, p.NickName);
+                GameObject entity = Instantiate(PlayerListEntityPrefab);
+                entity.transform.SetParent(InsideRoomPanel.transform);
+                entity.transform.localScale = Vector3.one;
+                entity.GetComponent<PlayerListEntity>().Initialize(p.ActorNumber, p.NickName);
 
                 object isPlayerReady;
                 if (p.CustomProperties.TryGetValue(GameConstants.PLAYER_READY, out isPlayerReady))
                 {
-                    entry.GetComponent<PlayerListEntity>().SetPlayerReady((bool) isPlayerReady);
+                    entity.GetComponent<PlayerListEntity>().SetPlayerReady((bool) isPlayerReady);
                 }
 
-                playerListEntries.Add(p.ActorNumber, entry);
+                playerListEntities.Add(p.ActorNumber, entity);
             }
 
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
@@ -206,41 +142,37 @@ namespace SpaceCombat.Lobby
 
         public override void OnLeftRoom()
         {
-            //SetActivePanel(SelectionPanel.name);
-
-            foreach (GameObject entry in playerListEntries.Values)
+            foreach (GameObject entity in playerListEntities.Values)
             {
-                Destroy(entry.gameObject);
+                Destroy(entity.gameObject);
             }
 
-            playerListEntries.Clear();
-            playerListEntries = null;
+            playerListEntities.Clear();
+            playerListEntities = null;
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            Debug.LogWarning("OnPlayerEnteredRoom");
-            GameObject entry = Instantiate(PlayerListEntryPrefab);
-            entry.transform.SetParent(InsideRoomPanel.transform);
-            entry.transform.localScale = Vector3.one;
-            entry.GetComponent<PlayerListEntity>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
+            GameObject entity = Instantiate(PlayerListEntityPrefab);
+            entity.transform.SetParent(InsideRoomPanel.transform);
+            entity.transform.localScale = Vector3.one;
+            entity.GetComponent<PlayerListEntity>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
 
-            playerListEntries.Add(newPlayer.ActorNumber, entry);
+            playerListEntities.Add(newPlayer.ActorNumber, entity);
 
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
-            playerListEntries.Remove(otherPlayer.ActorNumber);
+            Destroy(playerListEntities[otherPlayer.ActorNumber].gameObject);
+            playerListEntities.Remove(otherPlayer.ActorNumber);
 
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
-            Debug.LogWarning("OnMasterClientSwitched");
             if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
             {
                 StartGameButton.gameObject.SetActive(CheckPlayersReady());
@@ -249,19 +181,18 @@ namespace SpaceCombat.Lobby
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            Debug.LogWarning("OnPlayerPropertiesUpdate");
-            if (playerListEntries == null)
+            if (playerListEntities == null)
             {
-                playerListEntries = new Dictionary<int, GameObject>();
+                playerListEntities = new Dictionary<int, GameObject>();
             }
 
-            GameObject entry;
-            if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
+            GameObject entity;
+            if (playerListEntities.TryGetValue(targetPlayer.ActorNumber, out entity))
             {
                 object isPlayerReady;
                 if (changedProps.TryGetValue(GameConstants.PLAYER_READY, out isPlayerReady))
                 {
-                    entry.GetComponent<PlayerListEntity>().SetPlayerReady((bool) isPlayerReady);
+                    entity.GetComponent<PlayerListEntity>().SetPlayerReady((bool) isPlayerReady);
                 }
             }
 
@@ -272,14 +203,42 @@ namespace SpaceCombat.Lobby
 
         #region UI CALLBACKS
 
+        public void OnCreateRoomButtonClicked()
+        {
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+
+                return;
+            }
+
+            if (!CreateRoomNameInputField.text.Equals(""))
+            {
+                CreateRoom();
+            }
+        }
+
+        public void OnJoinRoomButtonClicked()
+        {
+            if (!PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.JoinLobby();
+
+                return;
+            }
+
+            if (!JoinRoomNameInputField.text.Equals(""))
+            {
+                PhotonNetwork.JoinRoom(JoinRoomNameInputField.text);
+            }
+        }
+
         public void OnBackButtonClicked()
         {
             if (PhotonNetwork.InLobby)
             {
                 PhotonNetwork.LeaveLobby();
             }
-
-            //SetActivePanel(SelectionPanel.name);
         }
 
         public void CreateRoom()
@@ -298,8 +257,6 @@ namespace SpaceCombat.Lobby
 
         public void OnJoinRandomRoomButtonClicked()
         {
-            //SetActivePanel(JoinRandomRoomPanel.name);
-
             PhotonNetwork.JoinRandomRoom();
         }
 
@@ -310,7 +267,6 @@ namespace SpaceCombat.Lobby
 
         public void LaunchConnection()
         {
-            Debug.Log("OnLoginButtonClicked");
             string playerName = PlayerName;
 
             if (!playerName.Equals(""))
@@ -326,18 +282,14 @@ namespace SpaceCombat.Lobby
 
         public void OnRoomListButtonClicked()
         {
-            Debug.Log("OnRoomListButtonClicked");
             if (!PhotonNetwork.InLobby)
             {
                 PhotonNetwork.JoinLobby();
             }
-
-            //SetActivePanel(RoomListPanel.name);
         }
 
         public void OnStartGameButtonClicked()
         {
-            Debug.Log("OnStartGameButtonClicked");
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
@@ -387,19 +339,10 @@ namespace SpaceCombat.Lobby
             StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
 
-        //private void SetActivePanel(string activePanel)
-        //{
-        //    CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
-        //    JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
-        //    InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
-        //}
-
         private void UpdateCachedRoomList(List<RoomInfo> roomList)
         {
-            Debug.Log("UpdateCachedRoomList");
             foreach (RoomInfo info in roomList)
             {
-                // Remove room from cached room list if it got closed, became invisible or was marked as removed
                 if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
                 {
                     if (cachedRoomList.ContainsKey(info.Name))
@@ -410,12 +353,10 @@ namespace SpaceCombat.Lobby
                     continue;
                 }
 
-                // Update cached room info
                 if (cachedRoomList.ContainsKey(info.Name))
                 {
                     cachedRoomList[info.Name] = info;
                 }
-                // Add new room info to cache
                 else
                 {
                     cachedRoomList.Add(info.Name, info);
@@ -427,12 +368,12 @@ namespace SpaceCombat.Lobby
         {
             foreach (RoomInfo info in cachedRoomList.Values)
             {
-                GameObject entry = Instantiate(RoomListEntryPrefab);
-                entry.transform.SetParent(RoomListContent.transform);
-                entry.transform.localScale = Vector3.one;
-                entry.GetComponent<RoomListEntity>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
+                GameObject entity = Instantiate(RoomListEntityPrefab);
+                entity.transform.SetParent(RoomListContent.transform);
+                entity.transform.localScale = Vector3.one;
+                entity.GetComponent<RoomListEntity>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
 
-                roomList.Add(info.Name, entry);
+                roomList.Add(info.Name, entity);
             }
         }
     }

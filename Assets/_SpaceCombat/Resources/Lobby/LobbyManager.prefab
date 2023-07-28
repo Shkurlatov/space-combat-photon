@@ -980,19 +980,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84fd812a67908014cb408f749ca7a55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoginPanel: {fileID: 0}
   PlayerName: 
-  SelectionPanel: {fileID: 0}
   CreateRoomPanel: {fileID: 8639067165593742275}
   CreateRoomNameInputField: {fileID: 8639067165456458061}
   JoinRoomNameInputField: {fileID: 574665309}
-  JoinRandomRoomPanel: {fileID: 0}
   RoomListPanel: {fileID: 8639067165946342113}
   RoomListContent: {fileID: 8639067166150622155}
-  RoomListEntryPrefab: {fileID: 114706, guid: 03c5e15309335324fba99d68e38cb08b, type: 3}
+  RoomListEntityPrefab: {fileID: 114706, guid: 03c5e15309335324fba99d68e38cb08b, type: 3}
   InsideRoomPanel: {fileID: 8639067165553688082}
   StartGameButton: {fileID: 8639067165788552067}
-  PlayerListEntryPrefab: {fileID: 195212, guid: d68bf8413681d9b4aa7328277e632e3f, type: 3}
+  PlayerListEntityPrefab: {fileID: 195212, guid: d68bf8413681d9b4aa7328277e632e3f, type: 3}
 --- !u!114 &8639067165228834686
 MonoBehaviour:
   m_ObjectHideFlags: 0
